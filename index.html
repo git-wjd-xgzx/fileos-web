@@ -49,6 +49,8 @@ label{font-size:12px;color:var(--dim);display:block;margin-top:10px}
   <b>设置</b>
   <label>Gist 链接（https://gist.github.com/用户名/ID）</label>
   <input id="inLink" placeholder="https://gist.github.com/..." autocapitalize="off" autocorrect="off">
+  <label>GitHub Token（可选，私有 Gist 用；只存本机浏览器）</label>
+  <input id="inToken" type="password" placeholder="ghp_xxx / github_pat_xxx" autocapitalize="off" autocorrect="off">
   <label>或直接从本地导入 JSON 文件</label>
   <input id="inFile" type="file" accept=".json,application/json">
   <div class="btns">
@@ -166,17 +168,56 @@ function rawUrlFrom(link){
   return 'https://gist.githubusercontent.com/'+m[1]+'/'+m[2]+'/raw/fileos-cloud-backup.json';
 }
 
+const KEY_TOKEN='fileos-m-token';
+function tokenNow(){ return (localStorage.getItem(KEY_TOKEN)||'').trim(); }
+
+async function apiGet(url, token){
+  const r = await fetch(url, { cache:'no-store', headers: token ? { Authorization:'Bearer '+token, Accept:'application/vnd.github+json' } : {} });
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r;
+}
+
 async function loadLink(){
   const link=(localStorage.getItem(KEY_LINK)||'').trim();
-  if(!link){ toast('请先在设置里填 Gist 链接'); $('dlg').showModal(); return; }
-  const url=rawUrlFrom(link);
-  if(!url){ toast('链接格式不对'); return; }
+  const token=tokenNow();
+  if(!link && !token){ toast('请先在设置里填 Gist 链接或 Token'); $('dlg').showModal(); return; }
   toast('正在读取…');
   try{
+    if(token){
+      // 1) 有链接：按 id 取文件内容
+      const m=link.match(/gist\.github\.com\/([^\/#]+)\/([0-9a-f]+)/i);
+      let id = m ? m[2] : null;
+      // 2) 没链接：列出 Gist，优先匹配当前班级
+      if(!id){
+        const list=await (await apiGet('https://api.github.com/gists?per_page=100', token)).json();
+        let hit=null, fallback=null;
+        for(const g of list){
+          const files=g.files||{};
+          if(!files['fileos-cloud-backup.json']) continue;
+          if(!fallback) fallback=g;
+          if((g.description||'').indexOf(curClass)>=0){ hit=g; break; }
+        }
+        const pick=hit||fallback;
+        if(!pick) throw new Error('账号里没有 FileOS 备份');
+        id=pick.id;
+      }
+      const full=await (await apiGet('https://api.github.com/gists/'+id, token)).json();
+      const f=(full.files||{})['fileos-cloud-backup.json'];
+      if(!f) throw new Error('该 Gist 里没有 fileos-cloud-backup.json');
+      let content=f.content;
+      if(f.truncated && f.raw_url){
+        const raw=await (await fetch(f.raw_url,{headers:{Authorization:'Bearer '+token}})).text();
+        content=raw;
+      }
+      applyJson(content,'Token 读取');
+      return;
+    }
+    const url=rawUrlFrom(link);
+    if(!url){ toast('链接格式不对'); return; }
     const r=await fetch(url,{cache:'no-store'});
     if(!r.ok) throw new Error('HTTP '+r.status);
     applyJson(await r.text(),'Gist 链接');
-  }catch(e){ toast('读取失败：'+e.message+'\n可在设置里用「导入 JSON 文件」'); }
+  }catch(e){ toast('读取失败：'+e.message+'\n可改用「导入 JSON 文件」'); }
 }
 
 function boot(){
@@ -187,9 +228,21 @@ function boot(){
 }
 
 $('btnRefresh').onclick=loadLink;
-$('btnSet').onclick=()=>{ $('inLink').value=localStorage.getItem(KEY_LINK)||''; $('dlg').showModal(); };
+$('btnSet').onclick=()=>{
+  $('inLink').value=localStorage.getItem(KEY_LINK)||'';
+  $('inToken').value='';
+  $('inToken').placeholder = tokenNow() ? '已设置 Token（留空则保持）' : 'ghp_xxx / github_pat_xxx';
+  $('dlg').showModal();
+};
 $('btnClose').onclick=()=>$('dlg').close();
-$('btnSaveLink').onclick=()=>{ localStorage.setItem(KEY_LINK,$('inLink').value.trim()); $('dlg').close(); loadLink(); };
+$('btnSaveLink').onclick=()=>{
+  localStorage.setItem(KEY_LINK,$('inLink').value.trim());
+  const t=($('inToken').value||'').trim();
+  if(t) localStorage.setItem(KEY_TOKEN,t);
+  $('inToken').value='';
+  $('dlg').close();
+  loadLink();
+};
 $('btnClear').onclick=()=>{ localStorage.removeItem(KEY_CACHE); data=null; source=''; render(); toast('缓存已清除'); };
 $('inFile').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
