@@ -1,0 +1,9 @@
+{
+  "name": "FileOS",
+  "short_name": "FileOS",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#1a2335",
+  "theme_color": "#0099ff",
+  "icons": []
+}
