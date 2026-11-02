@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html lang="zh-HK" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FileOS 27.3</title>
+<style>
+/* ===================== 主题变量 ===================== */
+:root{
+  --app-bg:linear-gradient(135deg,#1a2335 0%,#252d42 100%);
+  --glass-bg:rgba(25,29,39,0.7);
+  --card-bg:rgba(22,28,40,0.75);
+  --card-hover:rgba(100,150,255,0.2);
+  --surface:rgba(30,38,54,0.6);
+  --surface-focus:rgba(38,48,66,0.8);
+  --surface2:rgba(34,42,58,0.7);
+  --surface2-focus:rgba(40,50,70,0.8);
+  --tab-bg:rgba(28,36,50,0.6);
+  --hover-bg:rgba(40,50,70,0.8);
+  --header-btn:rgba(34,42,58,0.6);
+  --header-btn-hover:rgba(44,54,74,0.8);
+  --border:rgba(255,255,255,0.08);
+  --border-soft:rgba(255,255,255,0.06);
+  --border-strong:rgba(255,255,255,0.1);
+  --border-stronger:rgba(255,255,255,0.12);
+  --text:#ffffff;
+  --text-soft:#e6e6e6;
+  --text-dim:#8892a8;
+  --focus-border:rgba(100,150,255,0.3);
+  --focus-border2:rgba(100,150,255,0.4);
+  --blur:20px;
+  --card-shadow:0 8px 32px rgba(0,0,0,0.3);
+  --btn-bg:linear-gradient(135deg,#2a3549,#323e57);
+  --btn-text:#ffffff;
+  --overlay-bg:rgba(8,12,22,0.92);
+  --bar-track:rgba(255,255,255,0.12);
+  --scroll-track:rgba(20,26,38,0.5);
+  --scroll-thumb:rgba(100,120,160,0.5);
+  --scroll-thumb-hover:rgba(120,140,180,0.7);
+  --accent:#0099ff;
+  --accent-dark:#0077dd;
+}
+
+/* 浅色主题 */
+html[data-theme="light"]{
+  --app-bg:#eef2f7;
+  --glass-bg:rgba(255,255,255,0.55);
+  --card-bg:rgba(255,255,255,0.82);
+  --card-hover:rgba(0,153,255,0.25);
+  --surface:rgba(255,255,255,0.72);
+  --surface-focus:rgba(255,255,255,0.95);
+  --surface2:rgba(255,255,255,0.85);
+  --surface2-focus:rgba(255,255,255,0.95);
+  --tab-bg:rgba(255,255,255,0.6);
+  --hover-bg:rgba(255,255,255,0.92);
+  --header-btn:rgba(255,255,255,0.6);
+  --header-btn-hover:rgba(255,255,255,0.9);
+  --border:rgba(15,23,42,0.1);
+  --border-soft:rgba(15,23,42,0.07);
+  --border-strong:rgba(15,23,42,0.14);
+  --border-stronger:rgba(15,23,42,0.18);
+  --text:#1f2937;
+  --text-soft:#333a45;
+  --text-dim:#6b7280;
+  --focus-border:rgba(0,153,255,0.4);
+  --focus-border2:rgba(0,153,255,0.5);
+  --blur:20px;
+  --card-shadow:0 8px 24px rgba(15,23,42,0.14);
+  --btn-bg:linear-gradient(135deg,#e5e9f2,#d8deea);
+  --btn-text:#1f2937;
+  --overlay-bg:rgba(240,244,250,0.92);
+  --bar-track:rgba(15,23,42,0.1);
+  --scroll-track:rgba(15,23,42,0.06);
+  --scroll-thumb:rgba(15,23,42,0.25);
+  --scroll-thumb-hover:rgba(15,23,42,0.4);
+}
+
+/* 磨砂主题 */
+html[data-theme="frost"]{
+  --app-bg:linear-gradient(160deg,#dce6f5 0%,#eef3fb 45%,#e6eef9 100%);
+  --glass-bg:rgba(255,255,255,0.4);
+  --card-bg:rgba(255,255,255,0.5);
+  --card-hover:rgba(255,255,255,0.7);
+  --surface:rgba(255,255,255,0.45);
+  --surface-focus:rgba(255,255,255,0.6);
+  --surface2:rgba(255,255,255,0.5);
+  --surface2-focus:rgba(255,255,255,0.65);
+  --tab-bg:rgba(255,255,255,0.4);
+  --hover-bg:rgba(255,255,255,0.6);
+  --header-btn:rgba(255,255,255,0.4);
+  --header-btn-hover:rgba(255,255,255,0.6);
+  --border:rgba(255,255,255,0.5);
+  --border-soft:rgba(255,255,255,0.35);
+  --border-strong:rgba(255,255,255,0.6);
+  --border-stronger:rgba(255,255,255,0.7);
+  --text:#1f2937;
+  --text-soft:#333a45;
+  --text-dim:#5b6472;
+  --focus-border:rgba(0,153,255,0.5);
+  --focus-border2:rgba(0,153,255,0.6);
+  --blur:36px;
+  --card-shadow:0 10px 34px rgba(15,23,42,0.16);
+  --btn-bg:rgba(255,255,255,0.5);
+  --btn-text:#1f2937;
+  --overlay-bg:rgba(240,244,250,0.85);
+  --bar-track:rgba(255,255,255,0.4);
+  --scroll-track:rgba(255,255,255,0.3);
+  --scroll-thumb:rgba(15,23,42,0.3);
+  --scroll-thumb-hover:rgba(15,23,42,0.45);
+}
+
+/* 液态玻璃主题 */
+html[data-theme="liquid"]{
+  --app-bg:linear-gradient(135deg,#1a2335 0%,#252d42 100%);
+  --glass-bg:rgba(40,52,80,0.5);
+  --card-bg:rgba(30,40,60,0.6);
+  --card-hover:rgba(100,150,255,0.3);
+  --surface:rgba(40,52,80,0.5);
+  --surface-focus:rgba(50,64,96,0.7);
+  --surface2:rgba(44,56,82,0.6);
+  --surface2-focus:rgba(56,70,100,0.75);
+  --tab-bg:rgba(36,46,68,0.5);
+  --hover-bg:rgba(56,70,100,0.7);
+  --header-btn:rgba(44,56,82,0.5);
+  --header-btn-hover:rgba(58,72,104,0.7);
+  --border:rgba(255,255,255,0.1);
+  --border-soft:rgba(255,255,255,0.07);
+  --border-strong:rgba(255,255,255,0.14);
+  --border-stronger:rgba(255,255,255,0.18);
+  --text:#ffffff;
+  --text-soft:#e6e6e6;
+  --text-dim:#9aa6bd;
+  --focus-border:rgba(100,150,255,0.4);
+  --focus-border2:rgba(100,150,255,0.5);
+  --blur:24px;
+  --card-shadow:0 8px 32px rgba(0,0,0,0.35);
+  --btn-bg:linear-gradient(135deg,#2a3549,#323e57);
+  --btn-text:#ffffff;
+  --overlay-bg:rgba(20,28,46,0.9);
+  --bar-track:rgba(255,255,255,0.12);
+  --scroll-track:rgba(20,26,38,0.5);
+  --scroll-thumb:rgba(120,140,180,0.55);
+  --scroll-thumb-hover:rgba(140,160,200,0.75);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:微软雅黑,sans-serif;-webkit-user-select:none;user-select:none}
+html,body{width:100%;height:100%;overflow:hidden;background:transparent}
+body.browser{background:var(--app-bg)}
+
+/* ===================== 侧边栏（移植自「课堂小组计分器」，逻辑原封不动） ===================== */
+.edge-handle{
+  position:fixed;top:50%;right:0;transform:translateY(-50%);
+  width:46px;height:92px;border-radius:46px 0 0 46px;
+  background:var(--accent);color:#fff;font-size:30px;font-weight:700;line-height:1;
+  display:flex;align-items:center;justify-content:center;padding-right:8px;
+  box-shadow:-3px 0 12px rgba(15,23,42,0.25);
+  z-index:100000;border:none;cursor:pointer;
+}
+.edge-handle:active{background:var(--accent-dark)}
+body.expanded .edge-handle{
+  right:auto;left:0;width:30px;height:80px;font-size:20px;
+  border-radius:0 40px 40px 0;padding-right:0;padding-left:4px;
+  box-shadow:3px 0 12px rgba(15,23,42,0.18);
+}
+body.expanded .container{padding-left:30px}
+
+.panel{
+  position:fixed;inset:0;display:none;flex-direction:column;
+  background:var(--app-bg);border-left:1px solid var(--border);
+  overflow:hidden;
+}
+body.expanded .panel{display:flex}
+body.browser .panel{left:auto;right:0;width:min(420px,96vw);box-shadow:-2px 0 12px rgba(0,0,0,0.08)}
+/* 深色（默认，与原版一致）与液态玻璃：面板背景动态流光 */
+html[data-theme="dark"] .panel::before,
+html[data-theme="liquid"] .panel::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(64,128,255,0.12) 0%,transparent 60%),
+             radial-gradient(circle at 80% 20%,rgba(123,97,255,0.12) 0%,transparent 55%);
+  animation:liquidMove 12s linear infinite;pointer-events:none;
+}
+/* 液态玻璃主题：流光更强、更通透 */
+html[data-theme="liquid"] .panel::before{
+  background:radial-gradient(circle,rgba(64,128,255,0.2) 0%,transparent 60%),
+             radial-gradient(circle at 80% 20%,rgba(123,97,255,0.2) 0%,transparent 55%),
+             radial-gradient(circle at 20% 80%,rgba(0,180,255,0.16) 0%,transparent 55%);
+}
+
+/* 全局磨砂玻璃 + 液态动效 */
+.glass{
+  background:var(--glass-bg);
+  backdrop-filter:blur(var(--blur)) saturate(180%);
+  -webkit-backdrop-filter:blur(var(--blur)) saturate(180%);
+  border:1px solid var(--border-strong);
+  box-shadow:var(--card-shadow);
+}
+.liquid{
+  background:linear-gradient(135deg,#1a2335 0%,#252d42 100%);
+  position:relative;overflow:hidden;
+}
+.liquid::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(64,128,255,0.1) 0%,transparent 70%);
+  animation:liquidMove 12s linear infinite;
+}
+@keyframes liquidMove{0%{transform:translate(0,0)}50%{transform:translate(20%,20%)}100%{transform:translate(0,0)}}
+
+/* 升级维护遮罩（液态玻璃） */
+#updateOverlay{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:var(--overlay-bg);z-index:999999;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  color:var(--text);font-size:22px;display:none;overflow:hidden;
+}
+#updateOverlay::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(64,128,255,0.18) 0%,transparent 60%),
+             radial-gradient(circle at 80% 20%,rgba(123,97,255,0.16) 0%,transparent 55%);
+  animation:liquidMove 12s linear infinite;pointer-events:none;
+}
+.lg-panel{
+  position:relative;z-index:2;width:82%;max-width:380px;padding:34px 26px;
+  border-radius:24px;text-align:center;color:var(--text);
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.25);
+  box-shadow:0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.loading-bar{
+  width:80%;height:12px;background:var(--bar-track);border-radius:10px;overflow:hidden;margin:30px 0;
+}
+.loading-progress{
+  width:0%;height:100%;background:linear-gradient(90deg,#00b4ff,#4080ff,#7b61ff);transition:width 0.5s;
+}
+@keyframes fadePulse{0%{opacity:0.4}50%{opacity:1}100%{opacity:0.4}}
+.pulse{animation:fadePulse 2s infinite}
+
+.container{width:100%;height:100%;position:relative}
+
+/* 登录界面 磨砂玻璃 */
+.login-wrapper{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  position:absolute;z-index:9999;background:rgba(0,0,0,0.4);
+}
+.login-box{
+  width:90%;max-width:420px;padding:40px 30px;
+  border-radius:24px;
+  background:var(--card-bg);
+  backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
+  border:1px solid var(--border-stronger);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  color:var(--text);text-align:center;
+  position:relative;z-index:10;
+}
+.login-box h2{margin-bottom:24px;font-weight:600;color:var(--text)}
+.login-box input{
+  width:100%;padding:16px 20px;margin:10px 0;
+  border-radius:14px;
+  background:var(--surface2);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--border-strong);
+  color:var(--text);font-size:16px;
+  outline:none;text-align:center;transition:0.3s;
+}
+.login-box input:focus{border-color:var(--focus-border2);background:var(--surface2-focus)}
+.login-box button{
+  width:100%;padding:16px;border-radius:14px;
+  background:linear-gradient(90deg,#0099ff,#23c867);
+  border:none;color:#ffffff;font-size:16px;font-weight:600;
+  margin-top:10px;cursor:pointer;transition:0.3s;
+  box-shadow:0 4px 15px rgba(0,153,255,0.3);
+}
+.login-box button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,153,255,0.4)}
+.login-box button:nth-child(5){background:linear-gradient(90deg,#444e60,#555f71);box-shadow:0 4px 15px rgba(68,78,96,0.2)}
+.copyright{margin-top:8px;font-size:12px;color:var(--text-dim);line-height:1.4}
+
+/* 主界面 */
+.main{width:100%;height:100%;padding:20px;display:none;overflow-y:auto;position:relative;z-index:5}
+.header{display:flex;justify-content:space-between;align-items:center;color:var(--text);margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.header button{
+  padding:10px 14px;border-radius:12px;
+  background:var(--header-btn);
+  backdrop-filter:blur(8px);
+  border:1px solid var(--border);
+  color:var(--text);cursor:pointer;transition:0.25s;
+}
+.header button:hover{background:var(--header-btn-hover);transform:translateY(-1px)}
+.header button:nth-child(1){background:linear-gradient(90deg,#23c867,#32d87a)}
+.header button:nth-child(2){background:linear-gradient(90deg,#0099ff,#20a9ff)}
+.header button:nth-child(3){background:linear-gradient(90deg,#7b61ff,#917cff)}
+.header button:nth-child(4){background:linear-gradient(90deg,#ff9500,#ffb033)}
+.header button:nth-child(5){background:linear-gradient(90deg,#ff3b30,#ff5c50)}
+
+/* 标签栏 */
+.tab-bar{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
+.tab-bar button{
+  white-space:nowrap;padding:10px 14px;border-radius:12px;
+  background:var(--tab-bg);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--border);
+  color:var(--text-soft);transition:0.3s;
+}
+.tab-bar button:hover{background:var(--hover-bg)}
+.tab-bar button.active{
+  background:linear-gradient(90deg,#ff7d00,#ff9d33);
+  border-color:rgba(255,125,0,0.4);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(255,125,0,0.25);
+}
+
+.page{display:none}
+.page.active{display:block}
+
+/* 内容卡片 */
+.card{
+  background:var(--card-bg);
+  backdrop-filter:blur(var(--blur)) saturate(180%);
+  -webkit-backdrop-filter:blur(var(--blur)) saturate(180%);
+  border:1px solid var(--border-strong);
+  border-radius:20px;padding:18px;color:var(--text);margin-bottom:14px;
+  position:relative;z-index:5;transition:0.3s;
+}
+.card:hover{border-color:var(--card-hover);box-shadow:0 8px 25px rgba(0,0,0,0.25)}
+.card h3{margin-bottom:14px;font-size:16px;font-weight:600;color:var(--text)}
+
+.inp{
+  width:100%;padding:14px 16px;margin:8px 0;
+  border-radius:14px;
+  background:var(--surface);
+  backdrop-filter:blur(10px);
+  color:var(--text);
+  border:1px solid var(--border);
+  transition:0.3s;
+}
+.inp:focus{outline:none;border-color:var(--focus-border);background:var(--surface-focus)}
+.btn{
+  width:100%;padding:14px;
+  border-radius:14px;
+  background:var(--btn-bg);
+  border:1px solid var(--border);
+  color:var(--btn-text);margin-top:8px;cursor:pointer;transition:0.3s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
+.btn.primary{background:linear-gradient(90deg,#0099ff,#20a9ff);border-color:rgba(0,153,255,0.3);color:#fff}
+.btn.danger{background:linear-gradient(90deg,#ff3b30,#ff5c50);border-color:rgba(255,59,48,0.3);color:#fff}
+
+.name-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid var(--border-soft);color:var(--text);
+}
+.btn-group{display:flex;column-gap:6px}
+
+.student-card{
+  display:flex;align-items:center;gap:12px;padding:14px;
+  background:var(--surface);
+  backdrop-filter:blur(12px);
+  border-radius:16px;margin-bottom:10px;
+  border:1px solid var(--border);
+  transition:0.25s;
+}
+.student-card:hover{background:var(--hover-bg);border-color:var(--card-hover)}
+.student-avatar{
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,#0099ff,#4080ff);
+  color:#fff;font-weight:bold;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  border:2px solid rgba(255,255,255,0.15);
+  box-shadow:0 4px 10px rgba(0,153,255,0.25);
+}
+.student-info{flex:1}
+.student-name{font-weight:600;font-size:15px;color:var(--text)}
+
+.batch-del{display:none}
+.shop-manage{display:none}
+
+/* 滚动条美化 */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--scroll-track);border-radius:3px}
+::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--scroll-thumb-hover)}
+
+/* ===================== 评分页小键盘 ===================== */
+.keypad-display{
+  width:100%;padding:16px 12px;margin:6px 0;border-radius:14px;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);font-size:26px;font-weight:700;text-align:center;
+  font-variant-numeric:tabular-nums;letter-spacing:2px;
+}
+.keypad-hint{font-size:13px;color:var(--text-dim);text-align:center;margin:2px 0 10px;min-height:18px}
+.keypad-hint.match{color:#23c867;font-weight:600}
+.keypad-summary{font-size:15px;font-weight:600;color:var(--text);text-align:center;margin-bottom:8px}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 10px}
+.key{
+  height:52px;border-radius:12px;border:none;cursor:pointer;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);font-size:20px;font-weight:700;
+  transition:0.15s;-webkit-user-select:none;user-select:none;
+}
+.key:hover{background:var(--hover-bg)}
+.key:active{transform:scale(0.94)}
+.key.fn{color:#0099ff;font-size:17px}
+.key.sign{color:#ff9500}
+
+/* ===================== 程序内提示条（替代弹窗） ===================== */
+#toast{
+  position:absolute;left:50%;bottom:22px;transform:translate(-50%,16px);
+  padding:12px 20px;border-radius:999px;
+  background:rgba(35,200,103,0.96);color:#fff;font-size:15px;font-weight:600;
+  box-shadow:0 8px 24px rgba(0,0,0,0.28);white-space:nowrap;
+  opacity:0;pointer-events:none;transition:0.25s;z-index:100002;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===================== 27.2.2 新增样式 ===================== */
+/* 颜色主题：只切换强调色 */
+html[data-accent="green"]{--accent:#23c867;--accent-dark:#1aa54f}
+html[data-accent="purple"]{--accent:#7b61ff;--accent-dark:#5f49e0}
+html[data-accent="orange"]{--accent:#ff9500;--accent-dark:#e07800}
+html[data-accent="pink"]{--accent:#ff2d95;--accent-dark:#d81b7a}
+
+/* 主页应用图标 */
+.app-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.app-icon{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;border-radius:18px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:.25s;color:var(--text)}
+.app-icon:hover{background:var(--hover-bg);transform:translateY(-2px)}
+.app-icon .ic{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;background:linear-gradient(135deg,#0099ff,#4080ff);color:#fff;box-shadow:0 6px 16px rgba(0,153,255,.3)}
+.app-icon .lb{font-size:13px;font-weight:600}
+
+/* 设置列表行（iOS 风格） */
+.set-row{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--border);color:var(--text);cursor:pointer;margin-bottom:8px;transition:.2s;width:100%;font-size:15px;text-align:left}
+.set-row:hover{background:var(--hover-bg)}
+.set-row .ic{font-size:20px}
+.set-row .arr{margin-left:auto;color:var(--text-dim)}
+.sub-back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;background:var(--header-btn);border:1px solid var(--border);color:var(--text);cursor:pointer;margin-bottom:12px}
+
+.about-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border-soft);font-size:14px;color:var(--text)}
+.about-line span:first-child{color:var(--text-dim)}
+
+/* iOS 风格软件更新 */
+.ios-upd-icon{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,#0099ff,#7b61ff);display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;margin:0 auto 10px}
+.upd-note-box{font-size:13px;line-height:1.7;color:var(--text-soft);background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;white-space:pre-wrap;max-height:200px;overflow:auto;margin:8px 0}
+
+/* 个性化：主题预览与颜色 */
+.theme-prev{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.theme-cell{border-radius:16px;border:2px solid transparent;overflow:hidden;cursor:pointer;padding:6px;transition:.2s}
+.theme-cell.active{border-color:#0099ff}
+.theme-cell .pv{height:64px;border-radius:12px;display:flex;align-items:flex-end;padding:8px;position:relative;overflow:hidden}
+.theme-cell .pv .chip{width:60%;height:18px;border-radius:6px;margin-right:6px}
+.liquid-preview{background:radial-gradient(circle at 30% 20%,rgba(64,128,255,.4),transparent 60%),radial-gradient(circle at 80% 80%,rgba(123,97,255,.35),transparent 55%),linear-gradient(135deg,#1a2335,#252d42);animation:liquidMove 6s linear infinite}
+.theme-cell .nm{text-align:center;font-size:12px;margin-top:6px;color:var(--text)}
+.color-row{display:flex;gap:10px;flex-wrap:wrap}
+.color-dot{width:38px;height:38px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:.15s}
+.color-dot.active{border-color:var(--text)}
+
+/* 计时器 */
+.timer-big{font-size:56px;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;letter-spacing:2px;color:var(--text);margin:10px 0}
+.timer-bar{width:100%;height:10px;border-radius:8px;background:var(--bar-track);overflow:hidden;margin:12px 0}
+.timer-fill{height:100%;width:0%;background:linear-gradient(90deg,#00b4ff,#4080ff);transition:width .3s}
+
+/* 评分页：一页双列，不用滑动 */
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score-col .keypad{grid-template-columns:repeat(3,1fr);gap:5px}
+.score-col .key{height:44px;font-size:17px}
+
+/* 保存到本地 弹出菜单 */
+.local-save-menu{position:absolute;top:60px;right:12px;z-index:100003;display:none;width:232px;padding:10px;border-radius:16px;background:var(--glass-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--border-strong);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.local-save-menu.show{display:block}
+.local-save-menu button{margin-top:6px}
+</style>
+</head>
+
+<body>
+<!-- 侧边栏半圆箭头钮（） -->
+<button id="handle" class="edge-handle" title="启动 / 关闭">&#8249;</button>
+
+<div id="panel" class="panel">
+  <!-- 系统升级维护界面（液态玻璃）：真实更新流程 = 检查 → 说明 → 下载(进度) → 安装 -->
+  <div id="updateOverlay">
+    <div class="lg-panel">
+      <div class="pulse" id="updTitle">检查更新中…</div>
+      <div id="updNotes" style="display:none;max-height:150px;overflow:auto;font-size:13px;line-height:1.6;text-align:left;white-space:pre-wrap;margin-top:12px;opacity:0.85"></div>
+      <div class="loading-bar" id="updBarWrap">
+        <div class="loading-progress" id="updateProgress"></div>
+      </div>
+      <div id="updateText">正在连接更新服务器…</div>
+      <div id="updBtns" style="display:none;margin-top:16px;gap:10px;justify-content:center">
+        <button class="btn primary" id="updInstallBtn" onclick="updInstall()">立即更新</button>
+        <button class="btn" id="updPageBtn" onclick="updOpenPage()">官方下载页</button>
+        <button class="btn" onclick="updClose()">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="login-wrapper" id="loginWrapper">
+      <div class="login-box">
+        <h2>FileOS</h2>
+        <input id="loginUser" placeholder="fileID" autocomplete="off">
+        <input id="loginPwd" type="password" placeholder="密码" autocomplete="off">
+        <button onclick="login()">登录</button>
+        <div class="copyright">©王俊迪 2025-2026 经过核查，本程序不可在：Windows(MS-DOS)\Windows XP\Windows Vista\Windows 7\Windows 8\Windows 8.1上使用！仅支持Windows10及以上版本！</div>
+        <div class="copyright">使用前请认真阅读"README.md"文件</div>
+        
+        <!-- U盘密钥登录按钮 -->
+        <button class="btn primary" style="margin-top:8px;background:#23c867" onclick="selectUSBKeyFile()">硬盘、U盘密钥自动登录</button>
+      </div>
+    </div>
+
+    <div class="main" id="main">
+      <div class="header">
+        <div>FileOS</div>
+        <div>
+          <button onclick="cloudSaveAll()">☁️ 保存到云端</button>
+          <button onclick="toggleLocalSaveMenu()">💾 保存到本地 ▾</button>
+          <button onclick="logout()">退出</button>
+        </div>
+      </div>
+
+      <!-- 保存到本地：弹出原先的导出/导入按钮 -->
+      <div class="local-save-menu" id="localSaveMenu">
+        <button class="btn" onclick="saveAll()">💾 保存临时数据至内存</button>
+        <button class="btn primary" onclick="exportDataFile()">📤 导出数据</button>
+        <button class="btn" onclick="importDataFile()">📥 导入数据</button>
+        <button class="btn" onclick="exportFullScoreExcel()">📊 导出个人积分Excel</button>
+        <button class="btn" onclick="exportGroupScoreExcel()">📋 导出小组积分Excel</button>
+        <button class="btn" onclick="exportMergedFile(false)">🧩 导出合并文件</button>
+        <button class="btn" onclick="toggleLocalSaveMenu()">↩ 返回</button>
+      </div>
+
+      <div class="tab-bar">
+        <button class="active" onclick="goto(this, 'page-home')">主页</button>
+        <button onclick="goto(this, 'page-random')">随机抽人</button>
+        <button onclick="goto(this, 'page-score')">评分</button>
+        <button onclick="goto(this, 'page-rank')">排行榜</button>
+        <button onclick="goto(this, 'page-record')">详细记录</button>
+        <button onclick="goto(this, 'page-settings')">设置</button>
+      </div>
+
+      <div id="page-home" class="page active">
+        <div class="card"><h3>今日最高分</h3><div id="todayBest">暂无数据</div></div>
+        <div class="card">
+          <h3>应用</h3>
+          <div class="app-grid">
+            <div class="app-icon" onclick="openPage('page-shop')">
+              <div class="ic">🛒</div><div class="lb">积分商城</div>
+            </div>
+            <div class="app-icon" onclick="openPage('page-timer')">
+              <div class="ic" style="background:linear-gradient(135deg,#ff9500,#ff5c50);box-shadow:0 6px 16px rgba(255,149,0,.3)">⏱</div><div class="lb">计时器</div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">欢迎使用本程序，请观看使用视频！</div>
+      </div>
+
+
+      <div id="page-names" class="page">
+        <button class="sub-back" onclick="openPage('page-settings')">← 返回设置</button>
+        <div class="card">
+          <h3>导入Excel名单</h3>
+          <input type="file" id="excelFile" accept=".xlsx,.xls" class="inp">
+          <button class="btn primary" onclick="importExcelStudent()">导入Excel名单</button>
+        </div>
+        <div class="card">
+          <h3>学生名单</h3>
+          <textarea id="studentInput" rows="4" class="inp" placeholder="一行一个名字"></textarea>
+          <button class="btn" onclick="importStudentsByLine()">导入名单</button>
+        </div>
+        <div class="card">
+          <h3>已导入学生</h3>
+          <div id="studentCards"></div>
+        </div>
+      </div>
+
+      <div id="page-random" class="page">
+        <div class="card">
+          <h3>随机抽选</h3>
+          <div style="font-size:34px;margin:18px;font-weight:700;text-align:center" id="randomResult">?</div>
+          <div class="keypad-hint" id="randomHint">点「开始」滚动抽选</div>
+          <div class="btn-group">
+            <button class="btn primary" id="randomBtn" onclick="startRandom()">开始</button>
+            <button class="btn" onclick="resetRandomHistory()">重置</button>
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;margin-top:10px;color:var(--text);font-size:13px">
+            <input type="checkbox" id="randomNoRepeat" checked> 已抽中本轮不再重复
+          </label>
+        </div>
+        <div class="card">
+          <h3>本次抽取记录</h3>
+          <div id="randomHistory">暂无</div>
+        </div>
+      </div>
+
+      <div id="page-group" class="page">
+        <button class="sub-back" onclick="openPage('page-settings')">← 返回设置</button>
+        <div class="card">
+          <h3>自定义小组</h3>
+          <textarea id="customGroup" rows="4" class="inp" placeholder="一行一个小组，格式示例：&#10;第一组：张三 李四 王五&#10;第二组：赵六 孙七 周八"></textarea>
+          <div class="btn-group">
+            <button class="btn" onclick="saveCustomGroup()">保存</button>
+            <button class="btn" onclick="showCustomGroup()">查看</button>
+            <button class="btn" onclick="randomGroup()">随机分组</button>
+            <button class="btn primary" onclick="importGroupExcel()">导入Excel</button>
+          </div>
+          <div class="btn-group" style="margin-top:6px">
+            <button class="btn" onclick="autoGroupByCount()">按人数自动分组</button>
+            <button class="btn" onclick="exportGroupsExcel()">导出小组名单</button>
+            <button class="btn" onclick="clearGroups()">清空小组</button>
+          </div>
+          <div class="keypad-hint" style="text-align:left;margin-top:8px">
+            Excel 支持两种格式：<br>
+            A. 两列：<b>小组 | 成员</b>（每个成员一行）<br>
+            B. 多列：<b>小组 | 成员1 | 成员2 | 成员3 …</b>（一行一个小组）
+          </div>
+          <div id="groupResult" style="margin-top:10px"></div>
+        </div>
+      </div>
+
+      <div id="page-score" class="page">
+        <div class="card">
+          <h3>积分操作 <span id="classTag" style="font-size:12px;opacity:.65"></span>（一页完成，无需滑动）</h3>
+          <div class="score-grid">
+            <!-- 左：学号 -->
+            <div class="score-col">
+              <div class="keypad-display" id="studentIdDisplay" style="font-size:20px">—</div>
+              <div class="keypad-hint" id="studentIdHint">输入学号自动识别学生</div>
+              <div class="keypad" id="idKeypad"></div>
+            </div>
+            <!-- 右：分数 -->
+            <div class="score-col">
+              <div class="keypad-display" id="scoreNumDisplay" style="font-size:20px">0</div>
+              <div class="keypad-hint" id="scoreStudentInfo">打分对象：未选择</div>
+              <div class="keypad" id="scoreKeypad"></div>
+            </div>
+          </div>
+          <select id="scoreType" class="inp" style="margin-top:8px"></select>
+          <select id="scoreSubject" class="inp" style="margin-top:6px"></select>
+          <div class="btn-group">
+            <button class="btn primary" onclick="confirmScore(1)">个人计分</button>
+            <button class="btn primary" onclick="confirmScore(2)">整组积分</button>
+            <button class="btn" onclick="resetScoreInput()">清空</button>
+          </div>
+          <div class="keypad-hint" id="scoreGroupHint" style="text-align:left;margin-top:6px">整组积分：输入组长（或组内任一成员）学号，再点「整组积分」，全组每人各记一条</div>
+        </div>
+      </div>
+
+      <div id="page-rank" class="page">
+        <div class="card"><h3>积分排行</h3><div id="rankList"></div></div>
+      </div>
+
+      <div id="page-record" class="page">
+        <div class="card"><h3>积分详细记录</h3>
+          <div class="btn-group" id="detailFilterBar" style="margin-bottom:8px"></div>
+          <div id="detailRecordList"></div>
+        </div>
+      </div>
+
+      <div id="page-shop" class="page">
+        <button class="sub-back" onclick="openPage('page-home')">← 返回主页</button>
+        <div class="card shop-manage" id="shopManage">
+          <h3>Beta 商城上架</h3>
+          <input id="goodsName" class="inp" placeholder="商品名称">
+          <input id="goodsPrice" class="inp" type="number" placeholder="积分">
+          <button class="btn primary" onclick="addGoods()">上架</button>
+        </div>
+        <div class="card">
+          <h3>选择购买人</h3>
+          <select id="buyWho" class="inp" onchange="updateBuyWhoPoints()"></select>
+          <div class="keypad-hint" id="buyWhoPoints" style="margin-top:4px">—</div>
+        </div>
+        <div class="card"><h3>积分商城</h3><div id="shopList"></div></div>
+        <div class="card"><h3>购买记录</h3><div id="buyLog"></div></div>
+      </div>
+
+      <div id="page-settings" class="page">
+        <div class="card">
+          <h3>账户</h3>
+          <div class="about-line"><span>当前账户</span><b id="accountName">未登录</b></div>
+          <div class="about-line"><span>班级</span><select id="classSelect" class="inp" style="max-width:150px;padding:4px 8px" onchange="switchClass(this.value)"></select></div>
+          <div class="about-line"><span>权限</span><b id="accountRole">—</b></div>
+          <div class="btn-group">
+            <button class="btn" onclick="cloudRestoreAll()">⬇️ 从云端恢复</button>
+            <button class="btn" onclick="logout()">退出登录</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>服务</h3>
+          <button class="set-row" onclick="checkGitServer()"><span class="ic">🖥️</span> 服务器 <span class="arr">›</span></button>
+          <div id="serverResult" class="keypad-hint" style="text-align:left;min-height:0">点「服务器」检测 GitHub 更新服务器连通性</div>
+        </div>
+        <div class="card">
+          <h3>系统</h3>
+          <button class="set-row" onclick="openPage('page-advanced')"><span class="ic">🔧</span> 高级设置 <span class="arr">›</span></button>
+          <button class="set-row" onclick="openPage('page-general')"><span class="ic">⚙️</span> 通用 <span class="arr">›</span></button>
+          <button class="set-row" onclick="openPage('page-personalize')"><span class="ic">🎨</span> 个性化 <span class="arr">›</span></button>
+        </div>
+        <div class="card">
+          <h3>数据</h3>
+          <button class="set-row" onclick="openPage('page-names')"><span class="ic">📥</span> 导入设置 <span class="arr">›</span></button>
+          <button class="set-row" onclick="openPage('page-group')"><span class="ic">👥</span> 小组设置 <span class="arr">›</span></button>
+        </div>
+        <div class="card">
+          <h3>数据整合器</h3>
+          <div class="keypad-hint" style="text-align:left;margin-bottom:6px">选择之前导出的 .json 文件（可多选），与当前数据合并去重</div>
+          <input type="file" id="mergeFiles" class="inp" accept=".json" multiple>
+          <div class="btn-group">
+            <button class="btn primary" onclick="mergeSelectedFiles()">合并所选文件</button>
+            <button class="btn" onclick="exportMergedFile(false)">导出合并文件</button>
+          </div>
+          <div id="mergeSummary" class="keypad-hint" style="text-align:left;margin-top:8px">未合并</div>
+        </div>
+        <div class="card batch-del" id="batchDel">
+          <h3>批量删除学生</h3>
+          <textarea id="delNames" rows="4" class="inp" placeholder="一行一个要删除的学生姓名"></textarea>
+          <button class="btn danger" onclick="batchDelete()">确认批量删除</button>
+        </div>
+        <div class="card">
+          <button class="btn danger" id="clearScoreBtn" style="display:none" onclick="clearAllScores()">清空积分记录</button>
+        </div>
+      </div>
+
+      <div id="page-general" class="page">
+        <button class="sub-back" onclick="openPage('page-settings')">← 返回设置</button>
+        <div class="card" id="generalList">
+          <button class="set-row" onclick="showGeneralSection('about')"><span class="ic">💻</span> 关于本机 <span class="arr">›</span></button>
+          <button class="set-row" onclick="showGeneralSection('update')"><span class="ic">🔄</span> 软件更新 <span class="arr">›</span></button>
+          <button class="set-row" onclick="showGeneralSection('diag')"><span class="ic">🩺</span> 系统诊断 <span class="arr">›</span></button>
+        </div>
+        <div class="card" id="generalAbout" style="display:none">
+          <button class="sub-back" onclick="showGeneralSection('back')">← 返回</button>
+          <h3>关于本机</h3>
+          <div id="aboutLines"></div>
+          <div class="about-line"><span>程序版本</span><b id="aboutVersion">—</b></div>
+          <div class="about-line"><span>更新日期</span><b id="aboutReleaseDate">—</b></div>
+        </div>
+        <div class="card" id="generalUpdate" style="display:none">
+          <button class="sub-back" onclick="showGeneralSection('back')">← 返回</button>
+          <h3>软件更新</h3>
+          <div class="ios-upd-icon">📱</div>
+          <div style="text-align:center;font-weight:700;font-size:17px" id="iosUpdTitle">FileOS</div>
+          <div class="keypad-hint" id="iosUpdVer">正在检查更新…</div>
+          <div class="upd-note-box" id="iosUpdNotes" style="display:none"></div>
+          <div class="keypad-hint" id="iosUpdSize"></div>
+          <button class="btn primary" id="iosUpdBtn" onclick="iosCheckUpdate()">检查更新</button>
+        </div>
+        <div class="card" id="generalDiag" style="display:none">
+          <button class="sub-back" onclick="showGeneralSection('back')">← 返回</button>
+          <h3>系统诊断</h3>
+          <div class="pulse" id="diagTitle" style="text-align:center;margin:10px 0">🔧 准备诊断…</div>
+          <div class="loading-bar"><div class="loading-progress" id="diagProgress"></div></div>
+          <div class="keypad-hint" id="diagText">点击下方按钮开始</div>
+          <button class="btn primary" id="diagBtn" onclick="runFakeDiag()">开始诊断</button>
+        </div>
+      </div>
+
+      <div id="page-advanced" class="page">
+        <button class="sub-back" onclick="openPage('page-settings')">← 返回设置</button>
+        <div class="card">
+          <h3>云端备份（Gist / Token）</h3>
+          <div class="keypad-hint" style="text-align:left;margin-bottom:6px">
+            ① 教室电脑装了 GitHub CLI 并登录 → 直接「保存到云端」即可，不用填。<br>
+            ② 没装 gh → 填下面的 Token（gist 读写）就能保存/恢复。<br>
+            ③ 手机端要读同一份数据 → 把「Gist 链接」发给对方，在手机 App「设置」里粘贴即可（无需 Token）。
+          </div>
+          <input id="ghTokenInput" class="inp" type="password" placeholder="GitHub Token（gist 读写权限）" autocomplete="off">
+          <div class="btn-group">
+            <button class="btn primary" onclick="saveCloudToken()">保存 Token</button>
+            <button class="btn" onclick="testCloudToken()">测试连接</button>
+          </div>
+          <div id="cloudTokenStatus" class="keypad-hint" style="text-align:left;margin-top:6px">未配置</div>
+        </div>
+        <div class="card">
+          <h3>Gist 链接</h3>
+          <div class="keypad-hint" style="text-align:left;margin-bottom:6px">
+            格式：<b>https://gist.github.com/用户名/GistID</b><br>
+            获取方法：桌面端先「保存到云端」，然后用浏览器打开 github.com → 右上头像 → Your gists，点开那条 FileOS 备份，复制地址栏链接。
+          </div>
+          <input id="gistLinkInput" class="inp" placeholder="https://gist.github.com/xxx/xxxxxx">
+          <div class="btn-group">
+            <button class="btn primary" onclick="saveGistLink()">保存链接</button>
+            <button class="btn" onclick="copyGistLink()">复制链接</button>
+          </div>
+          <div id="gistLinkStatus" class="keypad-hint" style="text-align:left;margin-top:6px">未配置</div>
+        </div>
+        <div class="card">
+          <h3>操作</h3>
+          <div class="btn-group">
+            <button class="btn" onclick="cloudSaveAll()">☁️ 保存到云端</button>
+            <button class="btn" onclick="cloudRestoreAll()">⬇️ 从云端恢复</button>
+          </div>
+        </div>
+      </div>
+      <div id="page-personalize" class="page">
+        <button class="sub-back" onclick="openPage('page-settings')">← 返回设置</button>
+        <div class="card">
+          <h3>主题（点击预览图切换，含液态玻璃动效预览）</h3>
+          <div class="theme-prev" id="themePrev">
+            <div class="theme-cell" data-theme="dark" onclick="applyTheme('dark')">
+              <div class="pv" style="background:linear-gradient(135deg,#1a2335,#252d42)"><div class="chip" style="background:rgba(255,255,255,0.12)"></div></div>
+              <div class="nm">深色</div>
+            </div>
+            <div class="theme-cell" data-theme="light" onclick="applyTheme('light')">
+              <div class="pv" style="background:linear-gradient(135deg,#eef2f7,#dce6f5)"><div class="chip" style="background:rgba(255,255,255,0.9)"></div></div>
+              <div class="nm">浅色</div>
+            </div>
+            <div class="theme-cell" data-theme="frost" onclick="applyTheme('frost')">
+              <div class="pv" style="background:linear-gradient(160deg,#dce6f5,#eef3fb)"><div class="chip" style="background:rgba(255,255,255,0.55)"></div></div>
+              <div class="nm">磨砂</div>
+            </div>
+            <div class="theme-cell" data-theme="liquid" onclick="applyTheme('liquid')">
+              <div class="pv liquid-preview"><div class="chip" style="background:rgba(40,52,80,0.6)"></div></div>
+              <div class="nm">液态玻璃</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>颜色主题</h3>
+          <div class="color-row" id="colorRow">
+            <div class="color-dot" data-accent="blue" style="background:#0099ff" onclick="applyAccent('blue')" title="蓝色"></div>
+            <div class="color-dot" data-accent="green" style="background:#23c867" onclick="applyAccent('green')" title="绿色"></div>
+            <div class="color-dot" data-accent="purple" style="background:#7b61ff" onclick="applyAccent('purple')" title="紫色"></div>
+            <div class="color-dot" data-accent="orange" style="background:#ff9500" onclick="applyAccent('orange')" title="橙色"></div>
+            <div class="color-dot" data-accent="pink" style="background:#ff2d95" onclick="applyAccent('pink')" title="粉色"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-timer" class="page">
+        <button class="sub-back" onclick="openPage('page-home')">← 返回主页</button>
+        <div class="card">
+          <h3>计时器</h3>
+          <div class="timer-big" id="timerDisplay">00:00</div>
+          <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+          <div class="btn-group">
+            <input id="timerMin" class="inp" type="number" min="0" max="99" placeholder="分" style="text-align:center">
+            <input id="timerSec" class="inp" type="number" min="0" max="59" placeholder="秒" style="text-align:center">
+          </div>
+          <div class="btn-group" style="margin-top:6px">
+            <button class="btn" onclick="timerPreset(60)">1分</button>
+            <button class="btn" onclick="timerPreset(180)">3分</button>
+            <button class="btn" onclick="timerPreset(300)">5分</button>
+            <button class="btn" onclick="timerPreset(600)">10分</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn primary" id="timerStartBtn" onclick="timerToggle()">开始</button>
+            <button class="btn" onclick="timerReset()">重置</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>铃声</h3>
+          <div class="btn-group" id="ringRow">
+            <button class="btn" data-ring="chime" onclick="pickRing('chime')">叮咚</button>
+            <button class="btn" data-ring="bell" onclick="pickRing('bell')">上课铃</button>
+            <button class="btn" data-ring="beep" onclick="pickRing('beep')">提示音</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 程序内提示条 -->
+  <div id="toast"></div>
+</div>
+
+<!-- Excel 组件：优先用同目录本地文件（离线可用) -->
+<script src="xlsx.full.min.js"></script>
+<script>
+  if (typeof XLSX === 'undefined') {
+    var _xlsxFallback = document.createElement('script');
+    _xlsxFallback.src = 'https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js';
+    document.head.appendChild(_xlsxFallback);
+  }
+</script>
+<script>
+// ===================== 版本号 =====================
+const VERSION = "27.3";
+// 本次版本的发布日期（显示在「关于本机 / 软件更新」里）
+const RELEASE_DATE = "2026-10-28";
+
+// ===================== 侧边栏逻辑（） =====================
+// pywebview 桥接：Python 打包版通过 window.pywebview.api 暴露窗口接口
+if (!window.scoreboardAPI && window.pywebview && window.pywebview.api) {
+  window.scoreboardAPI = {
+    isElectron: true,
+    expand: function () { window.pywebview.api.expand(); },
+    collapse: function () { window.pywebview.api.collapse(); },
+    close: function () { window.pywebview.api.close(); },
+    setAutoLaunch: function () {},
+    onForceState: function () {}
+  };
+}
+
+var api = window.scoreboardAPI || null; // Electron / pywebview 环境接口
+// ?browser 参数可强制进入浏览器预览模式
+var forceBrowser = /[?&]browser\b/.test(location.search);
+var isElectron = !!(api && api.isElectron) && !forceBrowser;
+
+function isExpanded() { return document.body.classList.contains('expanded'); }
+function updateHandle() { document.getElementById('handle').innerHTML = isExpanded() ? '&#8250;' : '&#8249;'; }
+function applyExpanded(exp) { document.body.classList.toggle('expanded', exp); updateHandle(); }
+function expandPanel() { if (isElectron) api.expand(); else applyExpanded(true); }
+function collapsePanel() { applyExpanded(false); if (isElectron) api.collapse(); }
+
+function bindSidebar() {
+  document.getElementById('handle').addEventListener('click', function () {
+    if (isExpanded()) collapsePanel(); else expandPanel();
+  });
+  // 主进程窗口就位后回调：此时再切换界面样式（只切样式，不再回发 IPC）
+  if (api && api.onForceState) {
+    api.onForceState(function (s) { applyExpanded(s === 'expand'); });
+  }
+}
+
+// ===================== 主题与颜色（27.2.2：换主题按钮移入「设置 → 个性化」） =====================
+var THEMES = ['dark', 'light', 'frost', 'liquid'];
+function applyTheme(t) {
+  if (THEMES.indexOf(t) < 0) t = 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  try { localStorage.setItem('xgfile-theme', t); } catch (e) {}
+  // 高亮个性化页里的主题预览卡片
+  document.querySelectorAll('.theme-cell').forEach(function (c) {
+    c.classList.toggle('active', c.getAttribute('data-theme') === t);
+  });
+}
+function applyAccent(a) {
+  document.documentElement.setAttribute('data-accent', a || 'blue');
+  try { localStorage.setItem('xgfile-accent', a || 'blue'); } catch (e) {}
+  document.querySelectorAll('.color-dot').forEach(function (c) {
+    c.classList.toggle('active', c.getAttribute('data-accent') === a);
+  });
+}
+function initTheme() {
+  var saved = 'dark';
+  try { saved = localStorage.getItem('xgfile-theme') || 'dark'; } catch (e) {}
+  applyTheme(saved);
+  var acc = 'blue';
+  try { acc = localStorage.getItem('xgfile-accent') || 'blue'; } catch (e) {}
+  applyAccent(acc);
+}
+
+// ===================== 兼容性：XLSX 组件检测 =====================
+function hasXLSX() { return typeof XLSX !== 'undefined' && XLSX && XLSX.utils && XLSX.read; }
+function requireXLSX() {
+  if (!hasXLSX()) {
+    alert('Excel 组件未加载（需要联网或本地 xlsx 库）。\n请检查网络后重试，或在本目录放置 xlsx.full.min.js。');
+    return false;
+  }
+  return true;
+}
+
+// ===================== 程序内提示条（替代弹窗） =====================
+var toastTimer = null;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1800);
+}
+
+// 固定用户账号密码
+const userList = {
+  guest:  { pwd: "000000",    role: "view" },
+  admin:  { pwd: "xgzxce10",  role: "admin" },
+  Beta:   { pwd: "YMIT 10",   role: "beta" }
+};
+
+let currentUser = null;
+let names = [];
+let scoreTypes = ["积极发言","认真听讲","作业优秀","违反纪律","迟到","任务单优秀","上课吃东西","辅助加分"];
+let scores = [];
+let customGroups = [];
+// ===== 27.3 多班级：初三9班 / 初三10班 数据完全隔离 =====
+const CLASSES = ['初三9班','初三10班'];
+let currentClass = (function(){ try { return localStorage.getItem('fileos_class') || CLASSES[0]; } catch(e){ return CLASSES[0]; } })();
+function classStorageKey(){ return 'class_data_' + currentClass; }
+function switchClass(name){
+  if(CLASSES.indexOf(name) < 0) return;
+  saveSilent();
+  currentClass = name;
+  try { localStorage.setItem('fileos_class', name); } catch(e){}
+  names=[]; scores=[]; customGroups=[]; goodsList=[]; buyRecords=[]; studentMap={};
+  loadAll();
+  renderAll();
+  const sel = document.getElementById('classSelect'); if(sel) sel.value = currentClass;
+  const t = document.getElementById('classTag'); if(t) t.textContent = currentClass;
+  showToast('已切换到 ' + currentClass);
+}
+function initClassUI(){
+  const sel = document.getElementById('classSelect');
+  if(sel){
+    sel.innerHTML = CLASSES.map(function(x){ return '<option' + (x===currentClass?' selected':'') + '>' + x + '</option>'; }).join('');
+  }
+  const t = document.getElementById('classTag'); if(t) t.textContent = currentClass;
+}
+let goodsList = [];
+let buyRecords = [];
+let studentMap = {}; // 学号 -> 姓名
+
+// U盘密钥
+const SECRET_KEY = "BJCLASS2026USBLOCK910";
+const RIGHT_KEY = "XGZX_ADMIN_KEY_2026";
+
+// U盘密钥登录
+function selectUSBKeyFile(){
+  let input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".txt,.key";
+  input.onchange = function(e){
+    let file = e.target.files[0];
+    if(!file) return;
+    let reader = new FileReader();
+    reader.onload = function(ev){
+      let txt = ev.target.result.trim();
+      if(txt === RIGHT_KEY || txt === SECRET_KEY){
+        document.getElementById("loginUser").value = "admin";
+        document.getElementById("loginPwd").value = "xgzxce10";
+        login();
+        alert("✅ U盘认证成功，已自动登录管理员");
+      }else{
+        alert("❌ U盘未授权");
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// 登录核心函数
+function login(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPwd').value.trim();
+  if(!u || !p){
+    alert("账号密码不能为空");
+    return;
+  }
+  if(userList[u] && userList[u].pwd === p){
+    currentUser = {name: u, role: userList[u].role};
+    document.getElementById('loginWrapper').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+
+    if(currentUser.role === "beta"){
+      document.getElementById('batchDel').style.display = 'block';
+      document.getElementById('shopManage').style.display = 'block';
+    }else{
+      document.getElementById('batchDel').style.display = 'none';
+      document.getElementById('shopManage').style.display = 'none';
+    }
+
+    if(currentUser.name === "admin"){
+      document.getElementById('clearScoreBtn').style.display = 'block';
+    }else{
+      document.getElementById('clearScoreBtn').style.display = 'none';
+    }
+
+    loadAll();
+    renderAll();
+    refreshShop();
+    renderDetailRecord();
+    renderAccount();
+    // 27.2.2：登录后自动检查更新——有新版本弹窗提示，没有就静默跳过
+    setTimeout(checkUpdateAfterLogin, 1200);
+  }else{
+    alert("账号或密码错误");
+  }
+}
+
+// 登录后的静默更新检查：有更新直接弹窗，没有不做任何打扰
+async function checkUpdateAfterLogin(){
+  const api = updApi();
+  if(!api) return;
+  let r;
+  try { r = await api.check(); } catch(e){ return; }
+  if(r && r.hasUpdate && !r.error){
+    popUpdateModal(r);
+  }
+}
+
+// 把检查结果弹成更新弹窗（含说明与「立即更新」按钮）
+function popUpdateModal(r){
+  updPending = r;
+  const notes = document.getElementById('updNotes');
+  if(r.notes){
+    notes.innerText = r.notes;
+    notes.style.display = 'block';
+  }else{
+    notes.style.display = 'none';
+  }
+  updShow('发现新版本 ' + r.latestVersion,
+    '当前版本 ' + r.currentVersion + '，可立即更新', false, 0, true);
+}
+
+// 退出登录
+function logout(){
+  currentUser = null;
+  document.getElementById('loginWrapper').style.display = 'flex';
+  document.getElementById('main').style.display = 'none';
+  renderAccount();
+}
+
+// 设置页账户信息：admin/beta/guest 登的哪个就显示哪个
+function renderAccount(){
+  const n = document.getElementById('accountName');
+  const r = document.getElementById('accountRole');
+  if(!n || !r) return;
+  if(!currentUser){
+    n.textContent = '未登录';
+    r.textContent = '—';
+    return;
+  }
+  n.textContent = currentUser.name;
+  const roleNames = { admin: '管理员（全部权限）', beta: 'Beta（可上架商品）', view: '访客（只读）' };
+  r.textContent = roleNames[currentUser.role] || currentUser.role;
+}
+
+// 页面切换（已修复兼容性）
+function goto(btn, id){
+  document.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// 子页面切换（无标签栏入口的页面）：settingsFamily 时保持「设置」标签高亮
+function openPage(id){
+  var settingsFamily = ['page-settings','page-general','page-personalize','page-names','page-group'];
+  var homeFamily = ['page-shop','page-timer'];
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-bar button').forEach(function(b){
+    var target = b.getAttribute('onclick') || '';
+    var keep = (settingsFamily.indexOf(id) >= 0 && target.indexOf('page-settings') >= 0) ||
+               (homeFamily.indexOf(id) >= 0 && target.indexOf('page-home') >= 0);
+    b.classList.toggle('active', keep);
+  });
+  // 进入关于本机/软件更新时刷新内容
+  if(id === 'page-general'){ showGeneralSection('list'); }
+  if(id === 'page-timer'){ timerReset(); }
+  if(id === 'page-settings'){ renderAccount(); }
+  if(id === 'page-advanced'){ renderAdvanced(); }
+}
+
+// 权限判断
+function canEdit(){
+  return currentUser && (currentUser.role === "admin" || currentUser.role === "beta");
+}
+
+// 导入Excel学生名单
+function importExcelStudent(){
+  if(!canEdit())return;
+  if(!requireXLSX())return;
+  const f = document.getElementById('excelFile').files[0];
+  if(!f){alert("请选择文件");return;}
+  const r = new FileReader();
+  r.onload = e => {
+    const wb = XLSX.read(new Uint8Array(e.target.result),{type:"array"});
+    const json = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1});
+    let arr = [];
+    let map = {};
+    json.forEach(row=>{
+      // 第 1 列 = 学号，第 2 列 = 姓名
+      const id = row[0]!=null ? String(row[0]).trim() : '';
+      const name = row[1]!=null ? String(row[1]).trim() : '';
+      if(name) arr.push(name);
+      if(id && name && !map[id]) map[id] = name;
+    });
+    names = [...new Set(arr)];
+    studentMap = map;
+    renderStudentCards();
+    renderScoreSelect();
+    updateRank();
+  };
+  r.readAsArrayBuffer(f);
+}
+
+// 文本框导入名单
+function importStudentsByLine(){
+  if(!canEdit())return;
+  names = document.getElementById('studentInput').value.trim().split('\n').map(i=>i.trim()).filter(i=>i);
+  // 文本导入没有学号列，按序号 1、2、3… 当学号，方便小键盘输入
+  studentMap = {};
+  names.forEach((n,i)=>{ studentMap[String(i+1)] = n; });
+  renderStudentCards();
+  renderScoreSelect();
+  updateRank();
+}
+
+// 渲染学生卡片
+function renderStudentCards(){
+  let d = document.getElementById('studentCards');
+  d.innerHTML = '';
+  names.forEach(n=>{
+    let c = document.createElement('div');
+    c.className = 'student-card';
+    let a = document.createElement('div');
+    a.className = 'student-avatar';
+    a.innerText = n[0];
+    let i = document.createElement('div');
+    i.className = 'student-info';
+    i.innerHTML = `<div class='student-name'>${n}</div>`;
+    c.appendChild(a);
+    c.appendChild(i);
+    d.appendChild(c);
+  });
+}
+
+// （学生改由学号小键盘选择）
+function renderScoreSelect(){
+  let t = document.getElementById('scoreType');
+  t.innerHTML = '';
+  scoreTypes.forEach(n=>{
+    let o = document.createElement('option');
+    o.value = n;
+    o.innerText = n;
+    t.appendChild(o);
+  });
+}
+
+// 批量删除学生
+function batchDelete(){
+  if(!canEdit())return;
+  let dels = document.getElementById('delNames').value.trim().split('\n').map(i=>i.trim()).filter(i=>i);
+  names = names.filter(x=>!dels.includes(x));
+  renderStudentCards();
+  renderScoreSelect();
+  updateRank();
+}
+
+// ===================== 评分页小键盘（屏蔽原生键盘） =====================
+let idBuffer = '';          // 当前输入的学号
+let scoreBuffer = '';       // 当前输入的分数
+let scoreNegative = false;  // 分数正负号
+let matchedStudentName = '';// 学号匹配到的姓名
+
+function idKey(k){
+  if(k === 'C'){ idBuffer = ''; }
+  else if(k === '⌫'){ idBuffer = idBuffer.slice(0, -1); }
+  else if(/^\d$/.test(k) && idBuffer.length < 12){ idBuffer += k; }
+  renderIdInput();
+}
+function renderIdInput(){
+  document.getElementById('studentIdDisplay').innerText = idBuffer || '—';
+  const hint = document.getElementById('studentIdHint');
+  const info = document.getElementById('scoreStudentInfo');
+  if(idBuffer && studentMap[idBuffer]){
+    matchedStudentName = studentMap[idBuffer];
+    hint.innerText = '已识别：' + matchedStudentName;
+    hint.classList.add('match');
+    if(info) info.innerText = '打分对象：' + matchedStudentName;
+    if(info) info.classList.add('match');
+  }else{
+    matchedStudentName = '';
+    hint.innerText = '输入学号自动识别学生';
+    hint.classList.remove('match');
+    if(info){ info.innerText = '打分对象：未选择'; info.classList.remove('match'); }
+  }
+}
+function scoreKey(k){
+  if(k === '⌫'){ scoreBuffer = scoreBuffer.slice(0, -1); }
+  else if(k === '±'){ scoreNegative = !scoreNegative; }
+  else if(/^\d$/.test(k) && scoreBuffer.length < 5){ scoreBuffer += k; }
+  renderScoreInput();
+}
+function renderScoreInput(){
+  document.getElementById('scoreNumDisplay').innerText = (scoreNegative ? '-' : '') + (scoreBuffer || '0');
+}
+// 27.2.2 一页式评分：学号与分数同页输入，不再分两步、无需滑动
+function resetScoreInput(){
+  idBuffer = ''; scoreBuffer = ''; scoreNegative = false; matchedStudentName = '';
+  renderIdInput(); renderScoreInput();
+}
+function confirmScore(mode){
+  if(!matchedStudentName){ alert('请先在左侧输入学号识别学生'); return; }
+  const num = parseInt((scoreNegative ? '-' : '') + (scoreBuffer || '0'), 10) || 0;
+  if(num === 0){ alert('请输入要加的分数'); return; }
+  if(mode === 2){
+    // 整组积分：按该成员所在小组，全组每人各记一条
+    let members = null, groupName = '';
+    for(const g of customGroups){
+      const idx = g.indexOf('：') >= 0 ? g.indexOf('：') : g.indexOf(':');
+      const gn = idx > 0 ? g.slice(0, idx).trim() : g.trim();
+      const ms = idx > 0 ? g.slice(idx + 1).trim().split(/\s+/).filter(Boolean) : [];
+      if(ms.indexOf(matchedStudentName) >= 0){ members = ms; groupName = gn; break; }
+    }
+    if(!members){
+      alert('没找到「' + matchedStudentName + '」所在的小组\n请先在 设置 → 小组设置 里导入/配置小组');
+      return;
+    }
+    const type = '整组积分（' + groupName + '）';
+    const subj = (document.getElementById('scoreSubject')||{}).value || '不选科';
+    const date = new Date().toLocaleDateString();
+    const time = new Date().toLocaleTimeString();
+    members.forEach(function(m){
+      scores.push({ who: m, type: type, num: num, subject: subj, date: date, time: time });
+    });
+    updateRank();
+    renderDetailRecord();
+    const hint = document.getElementById('scoreGroupHint');
+    if(hint) hint.innerText = '✅ ' + groupName + ' · ' + members.length + ' 人 各 ' + (num > 0 ? '+' : '') + num + ' 分（组长：' + matchedStudentName + '）';
+    showToast(groupName + ' 整组' + (num > 0 ? '加' : '扣') + Math.abs(num) + ' 分（' + members.length + ' 人）');
+  }else{
+    // 个人计分：只给识别到的这名同学记分
+    addScoreFor(matchedStudentName, num);
+  }
+  // 保留学号连续给同一人/同一组打分，只清分数
+  scoreBuffer = ''; scoreNegative = false;
+  renderScoreInput();
+}
+function addScoreFor(who, num){
+  if(!canEdit())return;
+  let type = document.getElementById('scoreType').value;
+  let subj = (document.getElementById('scoreSubject')||{}).value || '不选科';
+  scores.push({
+    who,type,num,subject:subj,
+    date:new Date().toLocaleDateString(),
+    time:new Date().toLocaleTimeString()
+  });
+  updateRank();
+  renderDetailRecord();
+  showToast(who + ' 打分成功');
+}
+function initSubjectSelect(){
+  const sel = document.getElementById('scoreSubject');
+  if(!sel) return;
+  const opts = ['不选科','语文','数学','英语','物理','化学','生物','政治','历史','地理','体育','美术','音乐','信息'];
+  const cur = sel.value;
+  sel.innerHTML = opts.map(function(x){ return '<option>' + x + '</option>'; }).join('');
+  if(cur && opts.indexOf(cur) >= 0) sel.value = cur;
+}
+function buildKeypads(){
+  buildOneKeypad('idKeypad', ['1','2','3','4','5','6','7','8','9','C','0','⌫'], idKey);
+  buildOneKeypad('scoreKeypad', ['1','2','3','4','5','6','7','8','9','±','0','⌫'], scoreKey);
+}
+function buildOneKeypad(containerId, keys, handler){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  keys.forEach(k => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'key' + (k === 'C' || k === '⌫' ? ' fn' : '') + (k === '±' ? ' sign' : '');
+    b.textContent = k;
+    b.addEventListener('click', function(){ handler(k); });
+    c.appendChild(b);
+  });
+}
+
+// 更新积分排行
+function updateRank(){
+  let r = {};
+  names.forEach(n=>r[n] = 0);
+  scores.forEach(s=>{if(r[s.who]!==undefined)r[s.who] += s.num});
+  let arr = Object.entries(r).sort((a,b)=>b[1]-a[1]);
+  let d = document.getElementById('rankList');
+  d.innerHTML = '';
+  arr.forEach(([n,s],i)=>{
+    d.innerHTML += `<div class="name-item">${i+1}. ${n}：${s}分</div>`;
+  });
+  // 更新今日最高分
+  if(arr.length > 0){
+    document.getElementById('todayBest').innerText = `${arr[0][0]}：${arr[0][1]}分`;
+  }
+}
+
+// 渲染详细积分记录
+let detailSubject = '全部';
+const SUBJECTS = ['全部','语文','数学','英语','物理','化学','生物','政治','历史','地理','体育','美术','音乐','信息','不选科'];
+function renderDetailFilter(){
+  const bar = document.getElementById('detailFilterBar');
+  if(!bar) return;
+  bar.innerHTML = '';
+  SUBJECTS.forEach(function(s){
+    const b = document.createElement('button');
+    b.className = 'btn' + (detailSubject === s ? ' primary' : '');
+    b.style.fontSize = '12px';
+    b.textContent = s;
+    b.onclick = function(){ detailSubject = s; renderDetailRecord(); };
+    bar.appendChild(b);
+  });
+}
+function renderDetailRecord(){
+  let d = document.getElementById('detailRecordList');
+  if(!d) return;
+  renderDetailFilter();
+  let list = scores.filter(function(x){ return detailSubject === '全部' || (x.subject || '不选科') === detailSubject; });
+  if(list.length === 0){
+    d.innerHTML = detailSubject === '全部' ? '暂无记录' : ('「' + detailSubject + '」暂无记录');
+    return;
+  }
+  let s = list.slice().sort((a,b)=>new Date(a.date+' '+a.time)-new Date(b.date+' '+b.time)).reverse();
+  d.innerHTML = '';
+  s.forEach((item,i)=>{
+    let op = item.num > 0 ? '加' : '扣';
+    let sub = item.subject || '不选科';
+    d.innerHTML += `<div class="name-item">${i+1}. ${item.who} ${op}${Math.abs(item.num)}分 · ${sub}（${item.date} ${item.time}）</div>`;
+  });
+}
+
+// 清空所有积分记录
+function clearAllScores(){
+  if(currentUser.name !== "admin"){alert("无权限");return;}
+  if(confirm("确定清空所有积分记录？操作不可恢复！")){
+    scores = [];
+    updateRank();
+    renderDetailRecord();
+    saveAll();
+    alert("积分记录已清空");
+  }
+}
+
+// ===================== 随机抽人（27.2.2 优化：滚动动画 + 不重复 + 记录） =====================
+let randomHistory = [];      // 本次已抽中的名字
+let randomTimer = null;      // 滚动动画定时器
+
+function startRandom(){
+  if(names.length === 0){ alert('请先导入学生名单'); return; }
+  if(randomTimer) return; // 动画中不允许重复点击
+  const noRepeat = document.getElementById('randomNoRepeat').checked;
+  let pool = names;
+  if(noRepeat){
+    pool = names.filter(n => randomHistory.indexOf(n) < 0);
+    if(pool.length === 0){
+      alert('所有人都抽过一遍了，点「重置」开始新一轮');
+      return;
+    }
+  }
+  // 滚动抽选动画：名字快速跳动，逐渐放慢后定格
+  let ticks = 0;
+  const total = 22;
+  const btn = document.getElementById('randomBtn');
+  btn.disabled = true;
+  btn.textContent = '抽取中…';
+  randomTimer = setInterval(() => {
+    ticks++;
+    document.getElementById('randomResult').innerText = pool[Math.floor(Math.random()*pool.length)];
+    if(ticks >= total){
+      clearInterval(randomTimer);
+      randomTimer = null;
+      const finalName = pool[Math.floor(Math.random()*pool.length)];
+      document.getElementById('randomResult').innerText = finalName;
+      randomHistory.push(finalName);
+      renderRandomHistory();
+      showToast('抽中：' + finalName);
+      btn.disabled = false;
+      btn.textContent = '开始';
+    }
+  }, ticks < 12 ? 60 : 130); // 前快后慢
+}
+
+function resetRandomHistory(){
+  randomHistory = [];
+  renderRandomHistory();
+  showToast('抽取记录已重置');
+}
+
+function renderRandomHistory(){
+  const d = document.getElementById('randomHistory');
+  d.innerHTML = randomHistory.length
+    ? randomHistory.map((n,i) => `<div class="name-item">${i+1}. ${n}</div>`).join('')
+    : '暂无';
+}
+
+// 自定义小组保存/查看/随机分组
+function saveCustomGroup(){
+  if(!canEdit())return;
+  customGroups = document.getElementById('customGroup').value.trim().split('\n').filter(i=>i);
+  saveSilent();
+  renderGroupResult();
+  alert("小组配置已保存（" + customGroups.length + " 个小组）");
+}
+function showCustomGroup(){
+  renderGroupResult();
+}
+function randomGroup(){
+  if(names.length === 0)return;
+  let a = [...names];
+  for(let i = a.length - 1; i > 0; i--){
+    let j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  document.getElementById('groupResult').innerText = a.join('\n');
+}
+// ===================== 小组：导入 / 自动分组 / 导出（27.2.4） =====================
+// 统一格式：customGroups 里每条是 "组名：成员1 成员2"
+
+// 读取 Excel 文件并解析成组（支持两列 / 多列两种表格）
+function importGroupExcel(){
+  if(!requireXLSX()) return;
+  let input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.xlsx,.xls,.csv';
+  input.onchange = function(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      try{
+        const wb = XLSX.read(new Uint8Array(ev.target.result), {type:'array'});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const aoa = XLSX.utils.sheet_to_json(ws, {header:1, blankrows:false, defval:''});
+        const groups = parseGroupRows(aoa);
+        if(groups.length === 0){ alert('没有解析到小组数据\n请检查表头：小组/组名 + 成员'); return; }
+        applyParsedGroups(groups, 'Excel');
+      }catch(err){
+        alert('Excel 解析失败：' + err.message);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  };
+  input.click();
+}
+
+// 把 AOA 表格解析成 ["第一组：张三 李四", ...]
+function parseGroupRows(aoa){
+  const groups = [];             // {name, members[]}
+  const map = {};
+  const isHeader = (row) => row.some(c => /小组|组名|分组|成员|姓名/.test(String(c || '')));
+  let start = 0;
+  if(aoa.length > 0 && isHeader(aoa[0])) start = 1;
+  for(let i = start; i < aoa.length; i++){
+    const row = aoa[i].map(c => String(c == null ? '' : c).trim());
+    if(row.every(c => c === '')) continue;
+    let gname = row[0];
+    // 两列格式：小组 | 成员（每行一个成员）
+    if(row.length === 2 || (row.length > 2 && row.slice(2).every(c => c === ''))){
+      const members = row[1].split(/[、,，\s]+/).map(s => s.trim()).filter(Boolean);
+      if(!gname || members.length === 0) continue;
+      if(!map[gname]) { map[gname] = []; groups.push({name:gname, members:map[gname]}); }
+      members.forEach(m => { if(map[gname].indexOf(m) < 0) map[gname].push(m); });
+      continue;
+    }
+    // 多列格式：小组 | 成员1 | 成员2 ...
+    if(!gname) continue;
+    const members = row.slice(1).map(c => c.trim()).filter(c => c !== '');
+    if(members.length === 0) continue;
+    if(!map[gname]) { map[gname] = []; groups.push({name:gname, members:map[gname]}); }
+    members.forEach(m => { if(map[gname].indexOf(m) < 0) map[gname].push(m); });
+  }
+  return groups.map(g => g.name + '：' + g.members.join(' '));
+}
+
+// 应用解析结果：校验成员是否在学生名单里，写入 textarea 并保存
+function applyParsedGroups(groups, source){
+  const known = {}; names.forEach(n => known[n] = true);
+  const unknown = [];
+  groups.forEach(g => {
+    const m = g.split(/[：:]/);
+    const members = (m[1] || '').split(/\s+/).filter(Boolean);
+    members.forEach(mm => { if(!known[mm]) unknown.push(mm); });
+  });
+  customGroups = groups.slice();
+  const ta = document.getElementById('customGroup');
+  if(ta) ta.value = customGroups.join('\n');
+  saveSilent();
+  renderGroupResult();
+  let msg = '✅ 已从' + source + '导入 ' + groups.length + ' 个小组';
+  if(unknown.length > 0){
+    const uniq = [...new Set(unknown)];
+    msg += '\n⚠️ 有 ' + uniq.length + ' 人不在当前学生名单里：' + uniq.slice(0, 8).join('、') + (uniq.length > 8 ? ' …' : '');
+  }
+  alert(msg);
+}
+
+function renderGroupResult(){
+  const box = document.getElementById('groupResult');
+  if(!box) return;
+  if(customGroups.length === 0){ box.innerText = '暂无小组数据'; return; }
+  box.innerHTML = customGroups.map(function(g, i){
+    const idx = g.indexOf('：') >= 0 ? g.indexOf('：') : g.indexOf(':');
+    const name = idx > 0 ? g.slice(0, idx) : ('第' + (i+1) + '组');
+    const members = idx > 0 ? g.slice(idx+1).trim() : '';
+    return '<div class="name-item"><b>' + name + '</b> · ' + members + '</div>';
+  }).join('');
+}
+
+// 按人数自动分组（随机打乱后平均分配）
+function autoGroupByCount(){
+  if(names.length === 0){ alert('请先导入学生名单'); return; }
+  let per = parseInt(prompt('每组多少人？（当前共 ' + names.length + ' 人）', '4'));
+  if(!per || per < 1) return;
+  const arr = names.slice();
+  for(let i = arr.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); const t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  const groups = [];
+  for(let i = 0; i < arr.length; i += per){
+    const chunk = arr.slice(i, i + per);
+    if(chunk.length === 0) continue;
+    groups.push('第' + (groups.length + 1) + '组：' + chunk.join(' '));
+  }
+  customGroups = groups;
+  const ta = document.getElementById('customGroup');
+  if(ta) ta.value = customGroups.join('\n');
+  saveSilent();
+  renderGroupResult();
+  alert('✅ 已按每组 ' + per + ' 人分成 ' + groups.length + ' 组（随机打乱）');
+}
+
+// 导出小组名单为 Excel（小组 | 成员1 | 成员2 …）
+function exportGroupsExcel(){
+  if(!requireXLSX()) return;
+  if(customGroups.length === 0){ alert('暂无小组数据'); return; }
+  const rows = [['小组', '成员']];
+  const maxCols = Math.max.apply(null, customGroups.map(g => {
+    const idx = g.indexOf('：') >= 0 ? g.indexOf('：') : g.indexOf(':');
+    return idx > 0 ? g.slice(idx+1).trim().split(/\s+/).filter(Boolean).length : 0;
+  }));
+  customGroups.forEach(function(g){
+    const idx = g.indexOf('：') >= 0 ? g.indexOf('：') : g.indexOf(':');
+    const name = idx > 0 ? g.slice(0, idx) : g;
+    const members = idx > 0 ? g.slice(idx+1).trim().split(/\s+/).filter(Boolean) : [];
+    const row = [name];
+    for(let i = 0; i < maxCols; i++) row.push(members[i] || '');
+    rows.push(row);
+  });
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), '小组名单');
+  XLSX.writeFile(wb, 'FileOS小组名单.xlsx');
+  showToast('小组名单已导出');
+}
+
+function clearGroups(){
+  if(!confirm('确定清空所有小组？')) return;
+  customGroups = [];
+  const ta = document.getElementById('customGroup');
+  if(ta) ta.value = '';
+  saveSilent();
+  renderGroupResult();
+  showToast('小组已清空');
+}
+
+// 积分商城 - 上架商品
+function addGoods(){
+  if(!canEdit())return;
+  let n = document.getElementById('goodsName').value.trim();
+  let p = parseInt(document.getElementById('goodsPrice').value) || 0;
+  if(!n || p <= 0){alert("请输入合法商品名称和积分");return;}
+  goodsList.push({name:n,price:p});
+  document.getElementById('goodsName').value = '';
+  document.getElementById('goodsPrice').value = '';
+  refreshShop();
+}
+
+// 刷新商城列表
+function refreshShop(){
+  let d = document.getElementById('shopList');
+  d.innerHTML = '';
+  if(goodsList.length === 0){
+    d.innerHTML = '<div class="keypad-hint">暂无商品，Beta 账号可在上方「商城上架」添加</div>';
+  }
+  goodsList.forEach((g,idx)=>{
+    let item = document.createElement('div');
+    item.className = 'name-item';
+    item.innerHTML = `<span>${g.name}（${g.price}分）</span>
+    <button class="btn" style="padding:6px 10px;font-size:12px" onclick="buyGoods(${idx})">购买</button>`;
+    d.appendChild(item);
+  });
+
+  let l = document.getElementById('buyLog');
+  l.innerHTML = buyRecords.length ? buyRecords.map(r=>{
+    let buyer = (r.buyer && r.buyer !== r.user) ? ('（操作：' + r.buyer + '）') : '';
+    return `<div class="name-item">${r.time} ${r.user} 买 ${r.goods}（扣${r.price}分）${buyer}</div>`;
+  }).join('') : '无购买记录';
+}
+
+// 计算某同学当前积分
+function studentPoints(name){
+  let t = 0;
+  scores.forEach(s => { if(s.who === name) t += s.num; });
+  return t;
+}
+
+// 渲染「选择购买人」下拉框
+function renderBuyWho(){
+  let sel = document.getElementById('buyWho');
+  if(!sel) return;
+  let keep = sel.value;
+  sel.innerHTML = '';
+  if(names.length === 0){
+    let o = document.createElement('option');
+    o.value = '';
+    o.textContent = '（请先导入学生名单）';
+    sel.appendChild(o);
+    updateBuyWhoPoints();
+    return;
+  }
+  names.forEach(n => {
+    let o = document.createElement('option');
+    o.value = n;
+    o.textContent = n + '（' + studentPoints(n) + ' 分）';
+    sel.appendChild(o);
+  });
+  if(keep && names.indexOf(keep) >= 0) sel.value = keep;
+  updateBuyWhoPoints();
+}
+
+function updateBuyWhoPoints(){
+  let sel = document.getElementById('buyWho');
+  let hint = document.getElementById('buyWhoPoints');
+  if(!sel || !hint) return;
+  let who = sel.value;
+  hint.textContent = who ? (who + ' 当前积分：' + studentPoints(who) + ' 分') : '—';
+}
+
+// 静默保存（不弹窗）
+function saveSilent(){
+  try { localStorage.setItem(classStorageKey(), JSON.stringify({names,scores,customGroups,goodsList,buyRecords,studentMap,class:currentClass})); } catch(e){}
+}
+
+// 购买商品：管理员 / Beta 可代选同学，用该同学的积分扣分
+function buyGoods(idx){
+  if(!canEdit()){ alert("仅管理员或 Beta 可购买"); return; }
+  let g = goodsList[idx];
+  if(!g) return;
+  let sel = document.getElementById('buyWho');
+  let who = sel ? sel.value : '';
+  if(!who){ alert("请先选择要购买的同学"); return; }
+  let pts = studentPoints(who);
+  if(pts < g.price){
+    alert(who + ' 当前只有 ' + pts + ' 分，不足以购买「' + g.name + '」（需 ' + g.price + ' 分）');
+    return;
+  }
+
+  scores.push({
+    who: who,
+    type: "购买商品",
+    num: -g.price,
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString()
+  });
+
+  buyRecords.push({
+    user: who,
+    goods: g.name,
+    price: g.price,
+    time: new Date().toLocaleString(),
+    buyer: currentUser.name
+  });
+
+  saveSilent();
+  updateRank();
+  renderDetailRecord();
+  refreshShop();
+  renderBuyWho();
+  exportMergedFile(true);   // 购买后自动导出合并文件
+  showToast(who + ' 购买「' + g.name + '」，扣 ' + g.price + ' 分（剩余 ' + (pts - g.price) + ' 分）');
+}
+
+// ===================== 数据整合器 =====================
+function dataKeyScore(s){ return [s.who, s.type, s.num, s.date, s.time].join('|'); }
+function dataKeyBuy(r){ return [r.user, r.goods, r.price, r.time].join('|'); }
+function dataKeyGoods(g){ return [g.name, g.price].join('|'); }
+
+// 把 src 合并进 dst（全部去重）
+function mergeInto(dst, src){
+  (src.names || []).forEach(function(n){ if(n && dst.names.indexOf(n) < 0) dst.names.push(n); });
+  (src.customGroups || []).forEach(function(g){ if(g && dst.customGroups.indexOf(g) < 0) dst.customGroups.push(g); });
+
+  let sKeys = {};
+  dst.scores.forEach(function(s){ sKeys[dataKeyScore(s)] = 1; });
+  (src.scores || []).forEach(function(s){ let k = dataKeyScore(s); if(!sKeys[k]){ sKeys[k] = 1; dst.scores.push(s); } });
+
+  let gKeys = {};
+  dst.goodsList.forEach(function(g){ gKeys[dataKeyGoods(g)] = 1; });
+  (src.goodsList || []).forEach(function(g){ let k = dataKeyGoods(g); if(!gKeys[k]){ gKeys[k] = 1; dst.goodsList.push(g); } });
+
+  let bKeys = {};
+  dst.buyRecords.forEach(function(r){ bKeys[dataKeyBuy(r)] = 1; });
+  (src.buyRecords || []).forEach(function(r){ let k = dataKeyBuy(r); if(!bKeys[k]){ bKeys[k] = 1; dst.buyRecords.push(r); } });
+
+  Object.keys(src.studentMap || {}).forEach(function(id){ if(!dst.studentMap[id]) dst.studentMap[id] = src.studentMap[id]; });
+}
+
+function currentData(){
+  return {
+    names: names.slice(), scores: scores.slice(), customGroups: customGroups.slice(),
+    goodsList: goodsList.slice(), buyRecords: buyRecords.slice(), studentMap: Object.assign({}, studentMap)
+  };
+}
+
+function dataStats(d){
+  return { students: d.names.length, records: d.scores.length, groups: d.customGroups.length, goods: d.goodsList.length, buys: d.buyRecords.length };
+}
+
+function renderMergeSummary(extra){
+  let el = document.getElementById('mergeSummary');
+  if(!el) return;
+  let st = dataStats(currentData());
+  el.textContent = '学生 ' + st.students + ' 人 · 积分记录 ' + st.records + ' 条 · 小组 ' + st.groups + ' 个 · 商品 ' + st.goods + ' 件 · 购买 ' + st.buys + ' 条' + (extra || '');
+}
+
+// 合并所选 json 文件
+function mergeSelectedFiles(){
+  if(!canEdit()){ alert("仅管理员或 Beta 可操作"); return; }
+  let inp = document.getElementById('mergeFiles');
+  let files = inp && inp.files ? inp.files : null;
+  if(!files || files.length === 0){ alert("请先选择要合并的 .json 文件（可多选）"); return; }
+
+  let merged = currentData();
+  let done = 0, bad = 0;
+  for(let i = 0; i < files.length; i++){
+    let r = new FileReader();
+    r.onload = ev => {
+      try{
+        let d = JSON.parse(ev.target.result);
+        mergeInto(merged, d);
+      }catch(e){ bad++; }
+      done++;
+      if(done === files.length){
+        names = merged.names; scores = merged.scores; customGroups = merged.customGroups;
+        goodsList = merged.goodsList; buyRecords = merged.buyRecords; studentMap = merged.studentMap;
+        saveSilent();
+        renderAll();
+        renderMergeSummary(bad ? ('（' + bad + ' 个文件格式错误已跳过）') : '');
+        showToast('已合并 ' + (files.length - bad) + ' 个文件');
+      }
+    };
+    r.readAsText(files[i]);
+  }
+}
+
+// 导出合并文件（auto=true 时静默导出，用于购买后自动存档）
+function exportMergedFile(auto){
+  if(!canEdit()){ if(!auto) alert("仅管理员或 Beta 可操作"); return; }
+  let d = currentData();
+  let out = {
+    app: 'FileOS',
+    version: VERSION,
+    mergedAt: new Date().toLocaleString(),
+    names: d.names,
+    scores: d.scores,
+    customGroups: d.customGroups,
+    goodsList: d.goodsList,
+    buyRecords: d.buyRecords,
+    studentMap: d.studentMap
+  };
+  let blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+  let a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'FileOS数据合并_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  if(!auto) showToast('合并文件已导出');
+}
+
+// 导出购买日志
+function exportBuyLog(){
+  let blob = new Blob([JSON.stringify(buyRecords,null,2)],{type:"application/json"});
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "商城购买日志_"+new Date().toLocaleDateString()+".json";
+  a.click();
+}
+
+// 导出整体数据
+function exportDataFile(){
+  if(!canEdit()){alert("仅管理员可操作");return;}
+  let blob = new Blob([JSON.stringify({names,scores,customGroups,goodsList,buyRecords,studentMap},null,2)],{type:"application/json"});
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "FileOS.json";
+  a.click();
+  alert("数据导出成功");
+}
+
+// 导入整体数据
+function importDataFile(){
+  if(!canEdit())return;
+  let i = document.createElement("input");
+  i.type = "file";
+  i.accept = ".json";
+  i.multiple = true;
+  i.onchange = e => {
+    let f = e.target.files;
+    if(f.length === 0)return;
+    let all = {names:[],scores:[],customGroups:[],goodsList:[],buyRecords:[],studentMap:{}};
+    let c = 0;
+    for(let file of f){
+      let r = new FileReader();
+      r.onload = ev => {
+        try{
+          let d = JSON.parse(ev.target.result);
+          all.names = [...new Set([...all.names,...(d.names||[])])];
+          all.scores = [...all.scores,...(d.scores||[])];
+          all.customGroups = [...new Set([...all.customGroups,...(d.customGroups||[])])];
+          all.goodsList = [...all.goodsList,...(d.goodsList||[])];
+          all.buyRecords = [...all.buyRecords,...(d.buyRecords||[])];
+          all.studentMap = Object.assign(all.studentMap, d.studentMap || {});
+        }catch(e){
+          alert(file.name + " 文件格式错误");
+        }
+        c++;
+        if(c === f.length){
+          names = all.names;
+          scores = all.scores;
+          customGroups = all.customGroups;
+          goodsList = all.goodsList;
+          buyRecords = all.buyRecords;
+          studentMap = all.studentMap;
+          saveAll();
+          renderAll();
+          alert("数据导入完成");
+        }
+      };
+      r.readAsText(file);
+    }
+  };
+  i.click();
+}
+
+// 个人积分Excel导出（已按要求重构：仅保留姓名+个人总分，删除类型/时间等）
+function exportFullScoreExcel(){
+  if(!canEdit()){alert("仅管理员可操作");return;}
+  if(!requireXLSX())return;
+  // 计算个人总分
+  let personTotal = {};
+  names.forEach(n => personTotal[n] = 0);
+  scores.forEach(s => {
+    if(personTotal[s.who] !== undefined) personTotal[s.who] += s.num;
+  });
+  // 构建导出数据
+  let wb = XLSX.utils.book_new();
+  let data = [["姓名", "个人总分"]];
+  // 按总分降序排列
+  let sortedList = Object.entries(personTotal).sort((a,b) => b[1] - a[1]);
+  sortedList.forEach(([name, total]) => {
+    data.push([name, total]);
+  });
+  let ws = XLSX.utils.aoa_to_sheet(data);
+  XLSX.utils.book_append_sheet(wb, ws, "个人积分汇总");
+  XLSX.writeFile(wb, "FileOS个人积分汇总.xlsx");
+  alert("个人积分Excel导出成功");
+}
+
+// 新增小组积分Excel导出（严格按要求：第一列总分、第二列小组名、第三列及以后横向组员）
+function exportGroupScoreExcel(){
+  if(!canEdit()){alert("仅管理员可操作");return;}
+  if(!requireXLSX())return;
+  if(customGroups.length === 0){alert("暂无小组数据，请先在「小组」页面配置并保存小组");return;}
+
+  // 先计算个人总分
+  let personTotal = {};
+  names.forEach(n => personTotal[n] = 0);
+  scores.forEach(s => {
+    if(personTotal[s.who] !== undefined) personTotal[s.who] += s.num;
+  });
+
+  // 处理小组数据
+  let groupData = [];
+  // 表头：第一列总分，第二列小组名，第三列及以后组员
+  let header = ["小组总分", "小组名称"];
+  groupData.push(header);
+
+  // 遍历每个小组
+  customGroups.forEach((groupStr, index) => {
+    let groupName = `小组${index + 1}`;
+    let memberStr = groupStr.trim();
+    // 识别冒号分隔的小组名
+    if(groupStr.includes("：") || groupStr.includes(":")){
+      let nameSplit = groupStr.split(/[:：]/, 2);
+      groupName = nameSplit[0].trim();
+      memberStr = nameSplit[1]?.trim() || "";
+    }
+    // 拆分组员，支持空格、顿号、逗号分隔
+    let members = memberStr.split(/[ 、，,]+/).filter(m => m.trim());
+    // 计算小组总分
+    let groupTotal = 0;
+    members.forEach(member => {
+      groupTotal += personTotal[member] || 0;
+    });
+    // 构建行数据
+    let row = [groupTotal, groupName, ...members];
+    groupData.push(row);
+  });
+
+  // 导出Excel
+  let wb = XLSX.utils.book_new();
+  let ws = XLSX.utils.aoa_to_sheet(groupData);
+  XLSX.utils.book_append_sheet(wb, ws, "小组积分汇总");
+  XLSX.writeFile(wb, "FileOS小组积分汇总.xlsx");
+  alert("小组积分Excel导出成功");
+}
+
+// 本地保存数据
+function saveAll(){
+  if(!canEdit())return;
+  localStorage.setItem(classStorageKey(),JSON.stringify({names,scores,customGroups,goodsList,buyRecords,studentMap,class:currentClass}));
+  showToast('✅ 临时数据已保存至内存（' + currentClass + '）');
+  toggleLocalSaveMenu();
+}
+
+// 读取本地数据
+function loadAll(){
+  let d = localStorage.getItem(classStorageKey());
+  if(!d) d = localStorage.getItem("class_data");   // 兼容旧版单班数据
+  if(!d)return;
+  let o = JSON.parse(d);
+  names = o.names || [];
+  scores = o.scores || [];
+  customGroups = o.customGroups || [];
+  goodsList = o.goodsList || [];
+  buyRecords = o.buyRecords || [];
+  studentMap = o.studentMap || {};
+}
+
+// 统一渲染所有模块
+function renderAll(){
+  renderStudentCards();
+  renderScoreSelect();
+  updateRank();
+  renderBuyWho();
+  refreshShop();
+  renderDetailRecord();
+  renderMergeSummary();
+}
+
+// ===================== 自动更新（真实机制） =====================
+// 与 LightC 同款：GitHub Releases 上的 latest.json 清单 → 下载安装包 →
+// 主进程校验 sha256 + Ed25519 签名 → 安装版静默安装 / 便携版引导手动替换。
+// 下载与验签全部在主进程（updater.js）完成，页面只负责展示与交互。
+let updPending = null;      // 最近一次检查发现有更新时的结果
+let updDownloading = false; // 防止重复点击下载
+let updImportedPlatform = null; // 「导入更新.json」带入的平台条目（下载时优先使用）
+
+function updApi() { return window.updaterAPI || null; }
+
+// 显示更新面板：bar=false 隐藏进度条，pct 设置进度
+function updShow(title, text, bar, pct, buttons) {
+  const overlay = document.getElementById('updateOverlay');
+  document.getElementById('updTitle').innerText = title;
+  document.getElementById('updateText').innerText = text;
+  document.getElementById('updBarWrap').style.display = bar ? 'block' : 'none';
+  document.getElementById('updateProgress').style.width = (pct || 0) + '%';
+  const btns = document.getElementById('updBtns');
+  btns.style.display = buttons ? 'flex' : 'none';
+  overlay.style.display = 'flex';
+}
+
+function updClose() {
+  document.getElementById('updateOverlay').style.display = 'none';
+  document.getElementById('updNotes').style.display = 'none';
+  document.getElementById('updNotes').innerText = '';
+  updDownloading = false;
+}
+
+function updOpenPage() {
+  const api = updApi();
+  if (api) api.openPage();
+  else showToast('更新功能仅在程序内可用');
+}
+
+// 「立即更新」按钮：下载 → 验签 → 应用（弹窗与 iOS 更新界面共用）
+async function updInstall() {
+  const api = updApi();
+  if (!api || updDownloading) return;
+  updDownloading = true;
+  document.getElementById('updBtns').style.display = 'none';
+  updShow('正在下载更新…', '正在从官方源下载（自动校验 sha256 与数字签名）…', true, 1, false);
+  let res;
+  try {
+    res = updImportedPlatform ? await api.downloadFrom(updImportedPlatform) : await api.download();
+  } catch (e) {
+    updDownloading = false;
+    updShow('下载失败', String(e), false, 0, true);
+    return;
+  }
+  updDownloading = false;
+  if (!res.ok) {
+    updShow('下载失败', res.error || '未知错误', false, 0, true);
+    return;
+  }
+  updShow('校验通过，正在安装…', 'sha256 与数字签名校验通过，即将安装新版本', true, 100, false);
+  let applied = null;
+  try {
+    applied = await api.apply();
+  } catch (e) {
+    applied = { ok: false, error: String(e) };
+  }
+  if (applied && applied.ok && applied.portable) {
+    // 便携版无法覆盖自身：新版已复制到下载文件夹
+    updShow('下载完成', '新版已保存到「下载」文件夹。\n请先退出本程序，再用新文件替换旧程序。', false, 100, true);
+  } else if (applied && applied.ok && applied.manual) {
+    // 系统拒绝了自动启动：安装包已保存到「下载」文件夹并打开所在目录，引导手动双击
+    updShow('安装包已就绪', '安装包已保存到「下载」文件夹并已打开窗口，\n请双击运行 FileOS-*-Setup.exe 完成更新。', false, 100, true);
+  } else if (applied && !applied.ok) {
+    updShow('安装失败', applied.error || '未知错误', false, 0, true);
+  }
+  // 安装版：主进程启动安装程序后会自动退出本程序，页面无需再处理
+}
+
+// ===================== 27.2.2 设置页功能 =====================
+
+// 「服务器」：跑一遍 GitHub 更新服务器检测并显示结果
+async function checkGitServer(){
+  const out = document.getElementById('serverResult');
+  out.textContent = '正在检测 GitHub 更新服务器…';
+  const api = updApi();
+  let r = null;
+  try {
+    r = api ? await api.check() : null;
+  } catch(e){}
+  if(api && r && !r.error){
+    out.textContent = '✅ 服务器连通正常 · 最新版本 ' + r.latestVersion + ' · 本机 ' + r.currentVersion +
+      (r.hasUpdate ? '（有新版本可更新）' : '（已是最新）');
+    out.classList.add('match');
+  } else if(r && r.error){
+    out.textContent = '⚠️ 服务器检测：' + r.error;
+    out.classList.remove('match');
+  } else {
+    out.textContent = '更新功能仅在程序内可用（浏览器预览无法检测）';
+    out.classList.remove('match');
+  }
+}
+
+// 「关于本机」：自动识别当前电脑信息（浏览器可见范围）
+function renderAbout(){
+  const box = document.getElementById('aboutLines');
+  if(!box) return;
+  const ua = navigator.userAgent;
+  const osMatch = ua.match(/Windows NT ([\d.]+)/);
+  let osName = 'Windows 10/11';
+  if(osMatch) osName = 'Windows NT ' + osMatch[1];
+  const chromeMatch = ua.match(/Chrome\/([\d.]+)/);
+  const lines = [
+    ['操作系统', osName],
+    ['系统内核', 'Chromium ' + (chromeMatch ? chromeMatch[1] : '未知')],
+    ['处理器核心', (navigator.hardwareConcurrency || '未知') + ' 核'],
+    ['内存', (navigator.deviceMemory ? navigator.deviceMemory + ' GB（约）' : '未知')],
+    ['屏幕分辨率', window.screen.width + ' × ' + window.screen.height],
+    ['显示区域', window.screen.availWidth + ' × ' + window.screen.availHeight],
+    ['语言', navigator.language || '未知'],
+    ['时区', Intl.DateTimeFormat().resolvedOptions().timeZone || '未知'],
+    ['平台', navigator.platform || '未知'],
+    ['在线状态', navigator.onLine ? '在线' : '离线'],
+  ];
+  box.innerHTML = lines.map(l => `<div class="about-line"><span>${l[0]}</span><b>${l[1]}</b></div>`).join('');
+  const v = document.getElementById('aboutVersion');
+  const d = document.getElementById('aboutReleaseDate');
+  if(v) v.textContent = 'FileOS ' + VERSION;
+  if(d) d.textContent = RELEASE_DATE;
+}
+
+// 「通用」内部三个区块切换
+function showGeneralSection(sec){
+  document.getElementById('generalList').style.display = sec === 'list' ? 'block' : 'none';
+  document.getElementById('generalAbout').style.display = sec === 'about' ? 'block' : 'none';
+  document.getElementById('generalUpdate').style.display = sec === 'update' ? 'block' : 'none';
+  document.getElementById('generalDiag').style.display = sec === 'diag' ? 'block' : 'none';
+  if(sec === 'about') renderAbout();
+  if(sec === 'update') iosCheckUpdate(true); // 进入即自动检查
+  if(sec === 'diag') resetFakeDiag();
+}
+
+// iOS 风格软件更新界面：有更新显示内容+大小；没更新显示「已是最新」和本次更新内容+大小
+async function iosCheckUpdate(silent){
+  const title = document.getElementById('iosUpdTitle');
+  const ver = document.getElementById('iosUpdVer');
+  const notesBox = document.getElementById('iosUpdNotes');
+  const sizeBox = document.getElementById('iosUpdSize');
+  const btn = document.getElementById('iosUpdBtn');
+  const api = updApi();
+  if(!api){ ver.textContent = '更新功能仅在程序内可用'; return; }
+  if(!silent){ btn.disabled = true; btn.textContent = '正在检查…'; }
+  let r;
+  try { r = await api.check(); } catch(e){
+    ver.textContent = '检查失败：' + e;
+    if(btn){ btn.disabled = false; btn.textContent = '重新检查'; }
+    return;
+  }
+  if(r.error){ ver.textContent = r.error; btn.disabled = false; btn.textContent = '重新检查'; return; }
+  const platform = r.manifest && r.manifest.platforms ? r.manifest.platforms['windows-x86_64'] : null;
+  const sizeMb = platform && platform.size ? (platform.size/1048576).toFixed(1) : '未知';
+  const notes = (r.notes || '（本次发布说明暂无）').trim();
+  updPending = r;
+  if(r.hasUpdate){
+    title.textContent = 'FileOS 有新版本';
+    ver.textContent = '发现新版本 ' + r.latestVersion + '（当前 ' + r.currentVersion + '）';
+    notesBox.innerText = notes;
+    notesBox.style.display = 'block';
+    sizeBox.textContent = '本次更新大小：' + sizeMb + ' MB';
+    btn.disabled = false;
+    btn.textContent = '下载并安装';
+    btn.onclick = updInstall;
+  }else{
+    title.textContent = 'FileOS 已是最新版本';
+    ver.textContent = '当前版本 ' + r.currentVersion + ' · 发布于 ' + (r.pubDate || '').slice(0,10);
+    notesBox.innerText = notes;
+    notesBox.style.display = 'block';
+    sizeBox.textContent = '本次更新内容见上 · 安装包约 ' + sizeMb + ' MB';
+    btn.disabled = true;
+    btn.textContent = '已是最新版本';
+  }
+}
+
+// 「系统诊断」：原假诊断界面迁移至此（缩短时长、结果改为健康报告）
+let diagTimer = null;
+function resetFakeDiag(){
+  document.getElementById('diagProgress').style.width = '0%';
+  document.getElementById('diagTitle').innerText = '🔧 准备诊断…';
+  document.getElementById('diagText').innerText = '点击下方按钮开始';
+  const b = document.getElementById('diagBtn');
+  b.disabled = false;
+  b.textContent = '开始诊断';
+}
+function runFakeDiag(){
+  if(diagTimer) return;
+  const bar = document.getElementById('diagProgress');
+  const title = document.getElementById('diagTitle');
+  const text = document.getElementById('diagText');
+  const btn = document.getElementById('diagBtn');
+  btn.disabled = true;
+  let pct = 0;
+  diagTimer = setInterval(() => {
+    pct += 4;
+    if(pct > 100) pct = 100;
+    bar.style.width = pct + '%';
+    if(pct < 25){ title.innerText = '🔍 正在检查程序文件…'; text.innerText = '核对核心组件'; }
+    else if(pct < 55){ title.innerText = '🧹 正在检查数据完整性…'; text.innerText = '名单、积分记录、小组数据'; }
+    else if(pct < 85){ title.innerText = '🌐 正在检查更新服务器…'; text.innerText = '连接 GitHub 更新源'; }
+    else if(pct < 100){ title.innerText = '✨ 生成诊断报告…'; text.innerText = '即将完成'; }
+    if(pct >= 100){
+      clearInterval(diagTimer);
+      diagTimer = null;
+      title.innerText = '✅ 诊断完成，系统一切正常';
+      text.innerText = '程序运行健康，可以放心使用';
+      btn.disabled = false;
+      btn.textContent = '重新诊断';
+    }
+  }, 260);
+}
+
+// ===================== 计时器（可自定义 + 铃声，WebAudio 合成，离线可用） =====================
+let timerTotal = 0;     // 总秒数
+let timerLeft = 0;      // 剩余秒数
+let timerRunning = false;
+let timerId = null;
+let currentRing = 'chime';
+
+function timerPreset(sec){
+  document.getElementById('timerMin').value = Math.floor(sec/60);
+  document.getElementById('timerSec').value = sec%60;
+  timerReset();
+}
+function timerReset(){
+  if(timerId){ clearInterval(timerId); timerId = null; }
+  timerRunning = false;
+  const m = parseInt(document.getElementById('timerMin').value) || 0;
+  const s = parseInt(document.getElementById('timerSec').value) || 0;
+  timerTotal = Math.max(0, m*60 + s);
+  timerLeft = timerTotal;
+  document.getElementById('timerStartBtn').textContent = '开始';
+  renderTimer();
+}
+function timerToggle(){
+  if(timerRunning){
+    clearInterval(timerId); timerId = null;
+    timerRunning = false;
+    document.getElementById('timerStartBtn').textContent = '继续';
+    return;
+  }
+  if(timerLeft <= 0){
+    const m = parseInt(document.getElementById('timerMin').value) || 0;
+    const s = parseInt(document.getElementById('timerSec').value) || 0;
+    timerTotal = Math.max(0, m*60 + s);
+    timerLeft = timerTotal;
+    if(timerLeft <= 0){ alert('请先设置时间（分/秒）'); return; }
+  }
+  timerRunning = true;
+  document.getElementById('timerStartBtn').textContent = '暂停';
+  timerId = setInterval(() => {
+    timerLeft--;
+    renderTimer();
+    if(timerLeft <= 0){
+      clearInterval(timerId); timerId = null;
+      timerRunning = false;
+      timerLeft = 0;
+      renderTimer();
+      document.getElementById('timerStartBtn').textContent = '开始';
+      playRing(currentRing);
+      showToast('⏰ 时间到！');
+    }
+  }, 1000);
+}
+function renderTimer(){
+  const m = Math.floor(timerLeft/60), s = timerLeft%60;
+  document.getElementById('timerDisplay').innerText =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  document.getElementById('timerFill').style.width =
+    (timerTotal > 0 ? (timerLeft/timerTotal*100) : 0) + '%';
+}
+
+// WebAudio 合成铃声（不依赖任何音频文件）
+let audioCtx = null;
+function ensureAudio(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTone(freq, start, dur, vol){
+  const ctx = ensureAudio();
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+  g.gain.setValueAtTime(vol, ctx.currentTime + start);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(ctx.currentTime + start);
+  osc.stop(ctx.currentTime + start + dur + 0.05);
+}
+function playRing(kind){
+  try {
+    if(kind === 'bell'){
+      // 上课铃：急促双音反复
+      for(let i=0;i<6;i++){ playTone(1244, i*0.22, 0.2, 0.25); playTone(932, i*0.22+0.11, 0.2, 0.22); }
+    }else if(kind === 'beep'){
+      for(let i=0;i<4;i++){ playTone(880, i*0.3, 0.18, 0.3); }
+    }else{
+      // 叮咚
+      playTone(988, 0, 0.22, 0.3);
+      playTone(1319, 0.24, 0.5, 0.3);
+    }
+  }catch(e){}
+}
+function pickRing(kind){
+  currentRing = kind;
+  document.querySelectorAll('#ringRow button').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-ring') === kind);
+  });
+  // 点选时预览铃声
+  playRing(kind);
+}
+
+// ===================== 保存到云端 / 保存到本地 =====================
+function toggleLocalSaveMenu(){
+  const m = document.getElementById('localSaveMenu');
+  if(m) m.classList.toggle('show');
+}
+
+// ===================== 云端备份：gh CLI 优先，没装 gh 就用 Token 直连 API =====================
+const GH_TOKEN_KEY = 'fileos-gh-token';
+function getCloudToken(){
+  try { return (localStorage.getItem(GH_TOKEN_KEY) || '').trim(); } catch(e){ return ''; }
+}
+function renderCloudTokenStatus(){
+  const box = document.getElementById('cloudTokenStatus');
+  if(!box) return;
+  const t = getCloudToken();
+  if(t){
+    box.innerHTML = '✅ 已保存 Token（' + t.slice(0, 4) + '…' + t.slice(-4) + '） · 可直接保存/恢复云端备份';
+    box.classList.add('match');
+  }else{
+    box.innerHTML = '未配置 · 若本机已登录 GitHub CLI（gh）则不需要 Token';
+    box.classList.remove('match');
+  }
+}
+const GIST_LINK_KEY = 'fileos-gist-link';
+function renderAdvanced(){
+  renderCloudTokenStatus();
+  const box = document.getElementById('gistLinkStatus');
+  if(box){
+    const l = localStorage.getItem(GIST_LINK_KEY) || '';
+    box.innerHTML = l ? ('✅ ' + l) : '未配置 · 手机端需要它';
+    if(l) box.classList.add('match'); else box.classList.remove('match');
+  }
+}
+function saveGistLink(){
+  const input = document.getElementById('gistLinkInput');
+  const v = input ? input.value.trim() : '';
+  if(!v){ showToast('请粘贴 Gist 链接'); return; }
+  if(!/gist\.github\.com\/[^\/]+\/[0-9a-f]+/.test(v)){ showToast('链接格式不对，应为 https://gist.github.com/用户名/GistID'); return; }
+  try { localStorage.setItem(GIST_LINK_KEY, v); } catch(e){}
+  renderAdvanced();
+  showToast('Gist 链接已保存');
+}
+function copyGistLink(){
+  const v = localStorage.getItem(GIST_LINK_KEY) || '';
+  if(!v){ showToast('还没有保存链接'); return; }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(v).then(()=>showToast('已复制，可发给别人')).catch(()=>showToast('复制失败'));
+  }else{ showToast('请手动复制：' + v); }
+}
+function saveCloudToken(){
+  const input = document.getElementById('ghTokenInput');
+  const t = input ? input.value.trim() : '';
+  if(!t){ showToast('请先粘贴 Token'); return; }
+  try { localStorage.setItem(GH_TOKEN_KEY, t); } catch(e){}
+  if(input) input.value = '';
+  renderCloudTokenStatus();
+  showToast('Token 已保存在本机');
+}
+async function testCloudToken(){
+  const api = window.cloudAPI || null;
+  if(!api || !api.restoreWithToken){ showToast('该功能仅在桌面程序内可用'); return; }
+  const t = getCloudToken();
+  if(!t){ showToast('请先保存 Token'); return; }
+  showToast('正在测试…');
+  let res;
+  try { res = await api.restoreWithToken(t); } catch(e){ res = { ok:false, error:String(e) }; }
+  if(res && res.ok){
+    showToast('✅ Token 有效，云端已有备份');
+  }else{
+    showToast('连接失败：' + ((res && res.error) || '未知错误'));
+  }
+}
+
+// 保存到云端：优先用 gh CLI；失败或没装 gh 时用已保存的 Token 直连 GitHub API
+async function cloudSaveAll(){
+  if(!canEdit()){ showToast('仅管理员或 Beta 可保存'); return; }
+  const api = window.cloudAPI || null;
+  if(!api){ showToast('云端保存仅在程序内可用'); return; }
+  showToast('正在上传云端备份…');
+  const payload = JSON.stringify({
+    app:'FileOS', version:VERSION, class:currentClass,
+    savedAt: new Date().toLocaleString(),
+    data: currentData()
+  }, null, 2);
+
+  let res = null;
+  // 1) gh CLI 方式
+  try { res = await api.save(payload); } catch(e){ res = { ok:false, error:String(e) }; }
+  if(res && res.ok){ showToast('✅ 已保存到云端（私有 Gist，外人不可见）'); renderCloudTokenStatus(); return; }
+
+  // 2) Token 直连 API
+  const token = getCloudToken();
+  if(token && api.saveWithToken){
+    showToast('gh 不可用，改用 Token 上传…');
+    try { res = await api.saveWithToken(token, payload); } catch(e){ res = { ok:false, error:String(e) }; }
+    if(res && res.ok){ showToast('✅ 已保存到云端（Token 直连，私有 Gist）'); return; }
+    showToast('云端保存失败：' + (res.error || '未知错误'));
+    return;
+  }
+  showToast('云端保存失败：' + ((res && res.error) || '未知错误') + '（可在 设置 → 云端备份 填 Token）');
+  renderCloudTokenStatus();
+}
+
+// 从云端恢复最近一次备份并合并进当前数据
+async function cloudRestoreAll(){
+  if(!canEdit()){ showToast('仅管理员或 Beta 可操作'); return; }
+  const api = window.cloudAPI || null;
+  if(!api){ showToast('云端恢复仅在程序内可用'); return; }
+  if(!confirm('将从云端恢复最近一次备份并合并进当前数据，继续？')) return;
+  let res = null;
+  try { res = await api.restore(); } catch(e){ res = { ok:false, error:String(e) }; }
+  const token = getCloudToken();
+  if((!res || !res.ok) && token && api.restoreWithToken){
+    try { res = await api.restoreWithToken(token); } catch(e){ res = { ok:false, error:String(e) }; }
+  }
+  if(!res || !res.ok){ showToast('云端恢复失败：' + ((res && res.error) || '未知错误')); return; }
+  try {
+    const obj = JSON.parse(res.content);
+    const d = obj.data || obj;
+    mergeInto({names,scores,customGroups,goodsList,buyRecords,studentMap}, d);
+    saveSilent();
+    renderAll();
+    showToast('✅ 云端备份已恢复并合并');
+  }catch(e){
+    showToast('云端数据格式错误，无法恢复');
+  }
+}
+
+// 注册更新进度与「静默检查发现新版本」事件（仅 Electron 环境）
+if (window.updaterAPI) {
+  updaterAPI.onProgress(p => {
+    const bar = document.getElementById('updateProgress');
+    if (bar) bar.style.width = (p.percent < 0 ? 100 : Math.max(1, p.percent)) + '%';
+    const text = document.getElementById('updateText');
+    if (text) {
+      const mb = (p.downloaded / 1048576).toFixed(1);
+      const totalMb = p.total > 0 ? (p.total / 1048576).toFixed(1) : '?';
+      text.innerText = '正在下载 ' + mb + ' / ' + totalMb + ' MB';
+    }
+  });
+  updaterAPI.onAvailable(info => {
+    // 主进程静默检查发现有新版本：直接弹更新弹窗（登录后可见），没有则不打扰
+    if (currentUser && info) popUpdateModal({
+      latestVersion: info.version,
+      currentVersion: VERSION,
+      notes: info.notes || '',
+      pubDate: '',
+    });
+  });
+}
+
+// ===================== 一次性彻底清除全部本地数据（名单/学号/积分/小组/商品/购买记录） =====================
+try {
+  if (!localStorage.getItem('xgfile-all-cleared-270')) {
+    localStorage.removeItem('class_data');
+    localStorage.removeItem('xgfile-detail-cleared-270');
+    localStorage.setItem('xgfile-all-cleared-270', '1');
+    names = []; scores = []; customGroups = []; goodsList = []; buyRecords = []; studentMap = {};
+  }
+} catch (e) {}
+
+// ===================== 启动 =====================
+if (!isElectron) document.body.classList.add('browser'); // 浏览器预览模式
+initTheme();
+bindSidebar();
+buildKeypads();
+renderIdInput();
+renderScoreInput();
+renderAccount();
+renderCloudTokenStatus();
+initClassUI();
+initSubjectSelect();
+timerReset();
+updateHandle();
+if (!isElectron) expandPanel(); // 浏览器预览默认展开，方便直接体验
+window.__fileosReady = true; // 自检探针：页面脚本全部执行完毕
+</script>
+</body>
+</html>
