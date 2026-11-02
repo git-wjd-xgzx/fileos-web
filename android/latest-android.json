@@ -2,7 +2,7 @@
   "platform": "android",
   "version": "1.3",
   "apkUrl": "https://git-wjd-xgzx.github.io/fileos-web/android/FileOS-android-1.3.apk",
-  "sha256": "171bcfc6276cbe6a6edb412607856b09a7395f555026533a07d4906af843c3b9",
-  "size": 76004,
+  "sha256": "8a9aa77b9433c8073302b6320fba2ff26162a6dabd661cac9403fe7a70e3fb29",
+  "size": 76308,
   "notes": "FileOS Android 1.3"
 }
